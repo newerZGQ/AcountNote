@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_centerHorizontal="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+    <Button
+        android:id="@+id/clothing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="衣"
+        android:layout_weight="1"/>
+    <Button
+        android:id="@+id/food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="食"
+        android:layout_weight="1"/>
+    <Button
+        android:id="@+id/living"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="住"
+        android:layout_weight="1"/>
+    <Button
+        android:id="@+id/transportation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="行"
+        android:layout_weight="1"/>
+
+
+</LinearLayout>

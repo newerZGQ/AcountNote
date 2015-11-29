@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/background">
+
+    <ImageView
+        android:id="@+id/picture_show"
+        android:layout_width="fill_parent"
+        android:layout_height="350dp"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:id="@+id/price_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50dp"
+        android:textColor="@color/white"
+        android:layout_below="@+id/picture_show"
+        android:layout_centerHorizontal="true" />
+    <ImageView
+        android:id="@+id/lable_show"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:src="@drawable/hearthappiness"
+        android:layout_alignBottom="@+id/price_show"
+        android:layout_toStartOf="@+id/price_show" />
+    <include layout="@layout/happiness_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/include3"
+        android:layout_below="@+id/price_show"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp" />
+    <TextView
+        android:id="@+id/detail_show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="detail"
+        android:textSize="30dp"
+        android:layout_marginTop="38dp"
+        android:layout_below="@+id/include3"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp">
+    <ImageButton
+        android:id="@+id/happiness_imagebutton1"
+        android:background="@drawable/hearthappiness"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+    <ImageButton
+        android:id="@+id/happiness_imagebutton2"
+        android:background="@drawable/hearthappiness"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+    <ImageButton
+        android:id="@+id/happiness_imagebutton3"
+        android:background="@drawable/hearthappiness"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+    <ImageButton
+        android:id="@+id/happiness_imagebutton4"
+        android:background="@drawable/hearthappiness"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+    <ImageButton
+        android:id="@+id/happiness_imagebutton5"
+        android:background="@drawable/hearthappiness"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+</LinearLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/id_edit"
+        android:visibility="invisible"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/price_edit"
+        android:layout_alignParentLeft="true"
+        android:gravity="center_vertical|right"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:textColor= "@color/white"/>
+
+    <TextView
+        android:id="@+id/date_edit"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/lable_edit"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/date_edit"
+        android:layout_width="80dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_height="35dp"
+        android:textSize="10dp"
+        android:textColor="@color/white"/>
+
+</RelativeLayout>
