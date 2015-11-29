@@ -32,8 +32,8 @@ import java.io.IOException;
  * Created by 37902 on 2015/10/16.
  */
 public class GoodsEdit extends AppCompatActivity{
-//    判断打开相机
-    public static boolean TAKE_PHOTO;
+
+    private Boolean isInitial;
 
     private Goods goods;
 //    显示照片控件
@@ -134,10 +134,7 @@ public class GoodsEdit extends AppCompatActivity{
     }
 
     public void takePhoto(){
-//        提取homepage传过来的TAKE_PHOTO,判断是否打开相机
-        TAKE_PHOTO = getIntent().getBooleanExtra("takePhoto",TAKE_PHOTO);
-//        判断打开相机拍摄
-        if (TAKE_PHOTO == true) {
+
 //        打开输出文件流并创建jpg文件
             date = DateTools.getDate(DateTools.DETAIL_TIME);
             imageId = date + ".jpg";
@@ -159,7 +156,6 @@ public class GoodsEdit extends AppCompatActivity{
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
             startActivityForResult(intent, 1);
         }
-    }
     public void setContent(Goods goods){
         priceEdit.setText(""+goods.getPrice());
         detailEdit.setText(goods.getDetail());
@@ -182,12 +178,16 @@ public class GoodsEdit extends AppCompatActivity{
         setContentView(R.layout.goods_edit);
 
         createView();
-        takePhoto();
-//        Intent intent = getIntent();
-//        goods = (Goods)getIntent().getSerializableExtra("goods");
-//
-//        if (TAKE_PHOTO == false)
-//            setContent(goods);
+        //        提取homepage传过来的TAKE_PHOTO,判断是否打开相机
+        isInitial = getIntent().getBooleanExtra("isInitial",true);
+        if (isInitial == true) {
+            takePhoto();
+        }
+
+        if (isInitial == false) {
+            goods = (Goods) getIntent().getSerializableExtra("goods");
+            setContent(goods);
+        }
     }
 //       创建菜单
     @Override
@@ -203,16 +203,24 @@ public class GoodsEdit extends AppCompatActivity{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.save_button) {
-            goodsPrice = Double.valueOf((priceEdit.getText().toString()));
-            goodsDetail = detailEdit.getText().toString();
-            Goods goods = new Goods(goodsPrice,goodsLable,date,goodsHappiness,goodsDetail,imageId);
-            DataOperate.saveGoods(goods);
-            Intent intent = new Intent(this,HomePageActivity.class);
-            intent.putExtra("refresh",true);
-            startActivity(intent);
-            return true;
+            if (isInitial == true) {
+                goodsPrice = Double.valueOf((priceEdit.getText().toString()));
+                goodsDetail = detailEdit.getText().toString();
+                Goods goods = new Goods(goodsPrice, goodsLable, date, goodsHappiness, goodsDetail, imageId);
+                DataOperate.saveGoods(goods);
+                Intent intent = new Intent(this, HomePageActivity.class);
+                startActivity(intent);
+                return true;
+            }else {
+                goodsPrice = Double.valueOf((priceEdit.getText().toString()));
+                goodsDetail = detailEdit.getText().toString();
+                Goods goods = new Goods(goodsPrice, this.goods.getLable(), this.goods.getDate(), this.goods.getHappines(), goodsDetail, this.goods.getImageId());
+                DataOperate.saveGoods(goods);
+                Intent intent = new Intent(this, HomePageActivity.class);
+                startActivity(intent);
+                return true;
+            }
         }
-
         return super.onOptionsItemSelected(item);
     }
 //    相机返回后执行显示照片

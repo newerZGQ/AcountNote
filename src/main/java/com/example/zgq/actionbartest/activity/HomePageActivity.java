@@ -31,8 +31,6 @@ public class HomePageActivity extends AppCompatActivity {
     private ImageButton takePhoto;
 //    报表按钮
     private ImageButton acount;
-//    通过intent传输该数据给GoodsEdit，用于判断启动相机
-    private static Boolean TAKE_PHOTO;
 //    定义光标
     private Cursor myCursor;
 
@@ -117,9 +115,8 @@ public class HomePageActivity extends AppCompatActivity {
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TAKE_PHOTO = true;
                 Intent intent = new Intent(HomePageActivity.this, GoodsEdit.class);
-                intent.putExtra("takePhoto",TAKE_PHOTO);
+                intent.putExtra("isInitial",true);
                 startActivity(intent);
             }
 

@@ -97,7 +97,7 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
 //                Log.d("click","---");
         Intent intent = new Intent(getActivity(), GoodsEdit.class);
         intent.putExtra("id", id);
-        intent.putExtra("TAKE_PHOTO",false);
+        intent.putExtra("isInitial",false);
         intent.putExtra("goods",goods);
         startActivity(intent);
 //        Log.d("click","---");
