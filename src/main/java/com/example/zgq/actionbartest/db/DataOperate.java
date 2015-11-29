@@ -33,6 +33,8 @@ public class DataOperate {
 
     public static SQLiteDatabase db;
 
+    public static int currentItemPosition;
+
     //    构造方法
     private DataOperate(Context context) {
         GoodsDBHelper dbHelper = new GoodsDBHelper(context, DB_NAME, null, VERSION);
@@ -77,30 +79,18 @@ public class DataOperate {
         Log.d("count", "" + count);
         return count;
     }
-    public static ArrayList<Fragment> getFragmentList(){
+    public static ArrayList<Fragment> getFragmentList(int id){
+        currentItemPosition = 0;
         ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
         Cursor myCursor = db.query("goods",new String[]{"id as _id","price","lable","date","happiness","detail","imageId"},null,null,null,null,null);
         myCursor.moveToFirst();
         fragmentList.add(GoodsShowFragment.newInstance(myCursor.getInt(0)));
-        while(myCursor.moveToNext())
-             fragmentList.add(GoodsShowFragment.newInstance(myCursor.getInt(0)));
+        while(myCursor.moveToNext()) {
+            int currentId = myCursor.getInt(0);
+            fragmentList.add(GoodsShowFragment.newInstance(currentId));
+            if (id >= currentId)
+                currentItemPosition++;
+        }
         return fragmentList;
     }
 }
-//    public List<Goods> loadGoods(){
-//        List<Goods> list = new ArrayList<Goods>();
-//        Cursor cursor = db.query("Goods",null,null,null,null,null,null);
-//        if (cursor.moveToFirst()) {
-//            do {
-//                Goods goods = new Goods();
-//                goods.setPrice(cursor.getInt(cursor.getColumnIndex("price")));
-//                goods.setLable(cursor.getString(cursor.getColumnIndex("lable")));
-//                goods.setDetail(cursor.getString(cursor.getColumnIndex("detail")));
-//                goods.setDate(cursor.getString(cursor.getColumnIndex("date")));
-//                goods.setHappines(cursor.getInt(cursor.getColumnIndex("happiness")));
-//                goods.setImageId(cursor.getString(cursor.getColumnIndex("imageId")));
-//                list.add(goods);
-//            } while (cursor.moveToNext());
-//        }
-//        return list;
-//    }

@@ -15,6 +15,8 @@ import com.example.zgq.actionbartest.fragment.GoodsShowFragment;
 
 import java.util.ArrayList;
 
+import static com.example.zgq.actionbartest.db.DataOperate.currentItemPosition;
+
 /**
  * Created by 37902 on 2015/11/1.
  */
@@ -28,10 +30,10 @@ public class GoodsShow extends FragmentActivity {
         super.onCreate(savedInstanceState);
         id = getIntent().getIntExtra("id", 0);
 
-        fragmentList = DataOperate.getFragmentList();
+        fragmentList = DataOperate.getFragmentList(id);
         setContentView(R.layout.goods_show);
         mViewPager = (ViewPager)findViewById(R.id.pager);
         mViewPager.setAdapter(new FragAdatper(getSupportFragmentManager(),fragmentList));
-        mViewPager.setCurrentItem(id-1);
+        mViewPager.setCurrentItem(currentItemPosition);
     }
 }
