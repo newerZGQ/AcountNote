@@ -32,7 +32,7 @@ public class HomePageActivity extends AppCompatActivity {
 //    报表按钮
     private ImageButton acount;
 //    通过intent传输该数据给GoodsEdit，用于判断启动相机
-    private static int TAKE_PHOTO;
+    private static Boolean TAKE_PHOTO;
 //    定义光标
     private Cursor myCursor;
 
@@ -52,9 +52,14 @@ public class HomePageActivity extends AppCompatActivity {
     };
 //   显示listview的方法
     public void listViewShow(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        Acount.getCONSUMPTION();
+        toolbar.setTitle((CharSequence) (String.valueOf(Acount.getCONSUMPTION())));
+        setSupportActionBar(toolbar);
+
         db =DataOperate.db;
         listView = (ListView)findViewById(R.id.list_view_goods);
-        myCursor = db.query("goods",new String[]{"id as _id","price","lable","date"},null,null,null,null,null);
+        myCursor = db.query(DataOperate.currentTable,new String[]{"id as _id","price","lable","date"},null,null,null,null,null);
         SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, R.layout.list_item,myCursor,new String[]{"_id","price","lable","date"},new int[]{R.id.id_edit,R.id.price_edit,R.id.lable_edit,R.id.date_edit},0);
         SimpleCursorAdapter.ViewBinder viewBinder = new SimpleCursorAdapter.ViewBinder(){
             @Override
@@ -89,11 +94,11 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView idEdit = (TextView)view.findViewById(R.id.id_edit);
-//                Log.d("1","succeed");
+
                 String itemId = (idEdit.getText()).toString();
-//                Log.d("2","succeed");
+
                 int position1 = Integer.valueOf(itemId);
-//                Log.d("3",""+position1);
+
                 Intent intent = new Intent(HomePageActivity.this, GoodsShow.class);
                 intent.putExtra("id",position1);
                 startActivity(intent);
@@ -105,17 +110,14 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        Acount.setConsumption(200);
-        toolbar.setTitle((CharSequence) (String.valueOf(Acount.CONSUMPTION)));
-        setSupportActionBar(toolbar);
+
 
         takePhoto = (ImageButton) findViewById(R.id.take_photo);
 
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TAKE_PHOTO = 1;
+                TAKE_PHOTO = true;
                 Intent intent = new Intent(HomePageActivity.this, GoodsEdit.class);
                 intent.putExtra("takePhoto",TAKE_PHOTO);
                 startActivity(intent);

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.zgq.actionbartest.R;
 import com.example.zgq.actionbartest.db.GoodsDBHelper;
 import com.example.zgq.actionbartest.fragment.GoodsShowFragment;
+import com.example.zgq.actionbartest.util.DateTools;
 import com.example.zgq.actionbartest.util.Goods;
 
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class DataOperate {
     public static SQLiteDatabase db;
 
     public static int currentItemPosition;
+
+    public static String currentTable = "goods"+DateTools.getDate(true);
 
     //    构造方法
     private DataOperate(Context context) {
@@ -58,11 +61,11 @@ public class DataOperate {
             values.put("date", goods.getDate());
             values.put("happiness", goods.getHappines());
             values.put("imageId", goods.getImageId());
-            db.insert("goods", null, values);
+            db.insert(currentTable, null, values);
         }
     }
     public static Goods getGoods(int id){
-        Cursor myCursor = db.query("goods",new String[]{"id as _id","price","lable","date","happiness","detail","imageId"},null,null,null,null,null);
+        Cursor myCursor = db.query(currentTable,new String[]{"id as _id","price","lable","date","happiness","detail","imageId"},null,null,null,null,null);
         myCursor.moveToLast();
         while (id != myCursor.getInt(0)){
             myCursor.moveToPrevious();
@@ -73,7 +76,7 @@ public class DataOperate {
     }
 
     public static long getCurrentNumber(){
-        String sql = "SELECT COUNT(*) FROM " +"goods";
+        String sql = "SELECT COUNT(*) FROM " +currentTable;
         SQLiteStatement statement = db.compileStatement(sql);
         long count = statement.simpleQueryForLong();
         Log.d("count", "" + count);
@@ -82,7 +85,7 @@ public class DataOperate {
     public static ArrayList<Fragment> getFragmentList(int id){
         currentItemPosition = 0;
         ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
-        Cursor myCursor = db.query("goods",new String[]{"id as _id","price","lable","date","happiness","detail","imageId"},null,null,null,null,null);
+        Cursor myCursor = db.query(currentTable,new String[]{"id as _id","price","lable","date","happiness","detail","imageId"},null,null,null,null,null);
         myCursor.moveToFirst();
         fragmentList.add(GoodsShowFragment.newInstance(myCursor.getInt(0)));
         while(myCursor.moveToNext()) {
@@ -91,6 +94,18 @@ public class DataOperate {
             if (id >= currentId)
                 currentItemPosition++;
         }
+        myCursor.close();
         return fragmentList;
+    }
+    public static double getCONSUMPTION(String tableName) {
+        double consumption = 0;
+        Cursor myCursor = db.query(tableName, new String[]{"id as _id", "price", "lable", "date", "happiness", "detail", "imageId"}, null, null, null, null, null);
+        if (myCursor.moveToFirst()) {
+            consumption = Double.parseDouble(myCursor.getString(1));
+            while (myCursor.moveToNext()) {
+                consumption += Double.parseDouble(myCursor.getString(1));
+            }
+        }
+        return consumption;
     }
 }

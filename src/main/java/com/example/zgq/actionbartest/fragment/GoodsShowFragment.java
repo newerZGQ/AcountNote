@@ -1,5 +1,6 @@
 package com.example.zgq.actionbartest.fragment;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,10 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zgq.actionbartest.R;
+import com.example.zgq.actionbartest.activity.GoodsEdit;
 import com.example.zgq.actionbartest.db.DataOperate;
 import com.example.zgq.actionbartest.util.BipmapUtil;
 import com.example.zgq.actionbartest.util.Goods;
@@ -27,7 +30,7 @@ import java.util.UUID;
 /**
  * Created by 37902 on 2015/11/28.
  */
-public class GoodsShowFragment extends Fragment {
+public class GoodsShowFragment extends Fragment implements View.OnClickListener{
 
     private Goods goods;
     //    文件流
@@ -53,6 +56,8 @@ public class GoodsShowFragment extends Fragment {
     //    detail显示
     private TextView detailShow;
 
+    private Button editButton;
+
     private Bitmap bitmap;
 
     public void goodsShow(int id){
@@ -65,12 +70,14 @@ public class GoodsShowFragment extends Fragment {
         happinessImage4 = (ImageView) view.findViewById(R.id.happiness_imageview4);
         happinessImage5 = (ImageView) view.findViewById(R.id.happiness_imageview5);
         detailShow = (TextView) view.findViewById(R.id.detail_show);
-        priceShow = (TextView) view.findViewById(R.id.price_show);
+        editButton = (Button) view.findViewById(R.id.edit);
+
+        editButton.setOnClickListener(this);
+
+//        priceShow = (TextView) view.findViewById(R.id.price_show);
 
         goods = DataOperate.getGoods(id);
-
         priceShow.setText(""+goods.getPrice());
-
         detailShow.setText(goods.getDetail());
 
         String fileName = PathTools.getPath()+ "/" + goods.getImageId();
@@ -85,6 +92,18 @@ public class GoodsShowFragment extends Fragment {
         } finally {
         }
     }
+    @Override
+    public void onClick(View v) {
+//                Log.d("click","---");
+        Intent intent = new Intent(getActivity(), GoodsEdit.class);
+        intent.putExtra("id", id);
+        intent.putExtra("TAKE_PHOTO",false);
+        intent.putExtra("goods",goods);
+        startActivity(intent);
+//        Log.d("click","---");
+
+    }
+
     public static GoodsShowFragment newInstance(int id){
         Bundle args = new Bundle();
         args.putInt("id", id);
@@ -97,7 +116,6 @@ public class GoodsShowFragment extends Fragment {
         super.onCreate(savedInstanceState);
         id = getArguments().getInt("id");
     }
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.goods_fragment,container,false);

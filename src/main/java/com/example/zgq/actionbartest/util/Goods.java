@@ -1,9 +1,11 @@
 package com.example.zgq.actionbartest.util;
 
+import java.io.Serializable;
+
 /**
  * Created by 37902 on 2015/10/15.
  */
-public class Goods {
+public class Goods implements Serializable{
     private double price;
     private String lable;
     private String date;

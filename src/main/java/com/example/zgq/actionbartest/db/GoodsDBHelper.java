@@ -4,12 +4,15 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.zgq.actionbartest.util.DateTools;
+
 /**
  * Created by 37902 on 2015/10/23.
  */
 public class GoodsDBHelper extends SQLiteOpenHelper {
-//    public String tableName
-    public static final String CREATE_GOODS = "create table goods("
+//    String month = DateTools.getDate(true);
+    public static String tableName = "goods"+DateTools.getDate(true);
+    public static final String CREATE_GOODS = "create table " + tableName +"("
             + "id integer primary key autoincrement, "
             + "price real, "
             + "lable text, "

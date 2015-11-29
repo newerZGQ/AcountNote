@@ -33,11 +33,13 @@ import java.io.IOException;
  */
 public class GoodsEdit extends AppCompatActivity{
 //    判断打开相机
-    public static int TAKE_PHOTO;
+    public static boolean TAKE_PHOTO;
+
+    private Goods goods;
 //    显示照片控件
-    private ImageView picture;
+    private ImageView pictureEdit;
 //    编辑价钱控件
-    private TextView price;
+    private TextView priceEdit;
 //    价钱,默认-1，判断为-1时不显示
     private double goodsPrice = -1;
 
@@ -47,7 +49,7 @@ public class GoodsEdit extends AppCompatActivity{
 //    幸福度,默认值10，后面判断大于等于10的话不显示
     private int goodsHappiness = 10;
 //    编辑细节控件
-    private TextView detail;
+    private TextView detailEdit;
 //    细节
     private String goodsDetail = null;
 //    拍出照片的名字
@@ -70,9 +72,9 @@ public class GoodsEdit extends AppCompatActivity{
         toolbar.showOverflowMenu();
         setSupportActionBar(toolbar);
         //       实现各个组件
-        picture = (ImageView) findViewById(R.id.goods_picture);
-        price = (TextView) findViewById(R.id.price_edit);
-        detail = (TextView) findViewById(R.id.detail_edit);
+        pictureEdit = (ImageView) findViewById(R.id.goods_picture);
+        priceEdit = (TextView) findViewById(R.id.price_edit);
+        detailEdit = (TextView) findViewById(R.id.detail_edit);
         Button clothing = (Button) findViewById(R.id.clothing);
         Button food = (Button) findViewById(R.id.food);
         Button living = (Button) findViewById(R.id.living);
@@ -127,15 +129,15 @@ public class GoodsEdit extends AppCompatActivity{
         happinessImageButton4.setOnClickListener(listener);
         happinessImageButton5.setOnClickListener(listener);
 
-        price.setCursorVisible(false);
+        priceEdit.setCursorVisible(false);
 
     }
 
     public void takePhoto(){
 //        提取homepage传过来的TAKE_PHOTO,判断是否打开相机
-        TAKE_PHOTO = getIntent().getIntExtra("takePhoto",TAKE_PHOTO);
+        TAKE_PHOTO = getIntent().getBooleanExtra("takePhoto",TAKE_PHOTO);
 //        判断打开相机拍摄
-        if (TAKE_PHOTO == 1) {
+        if (TAKE_PHOTO == true) {
 //        打开输出文件流并创建jpg文件
             date = DateTools.getDate(DateTools.DETAIL_TIME);
             imageId = date + ".jpg";
@@ -155,10 +157,25 @@ public class GoodsEdit extends AppCompatActivity{
 //         打开相机,拍照结果给imageUri
             Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            startActivityForResult(intent, TAKE_PHOTO);
+            startActivityForResult(intent, 1);
         }
     }
+    public void setContent(Goods goods){
+        priceEdit.setText(""+goods.getPrice());
+        detailEdit.setText(goods.getDetail());
 
+        String fileName = PathTools.getPath()+ "/" + goods.getImageId();
+        try {
+            fis = new FileInputStream(fileName);
+            pictureEdit.setImageBitmap(BipmapUtil.ZoomBipmap(fis, 16));
+            fis.close();
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,7 +183,11 @@ public class GoodsEdit extends AppCompatActivity{
 
         createView();
         takePhoto();
-        SetPicture();
+//        Intent intent = getIntent();
+//        goods = (Goods)getIntent().getSerializableExtra("goods");
+//
+//        if (TAKE_PHOTO == false)
+//            setContent(goods);
     }
 //       创建菜单
     @Override
@@ -182,8 +203,8 @@ public class GoodsEdit extends AppCompatActivity{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.save_button) {
-            goodsPrice = Double.valueOf((price.getText().toString()));
-            goodsDetail = detail.getText().toString();
+            goodsPrice = Double.valueOf((priceEdit.getText().toString()));
+            goodsDetail = detailEdit.getText().toString();
             Goods goods = new Goods(goodsPrice,goodsLable,date,goodsHappiness,goodsDetail,imageId);
             DataOperate.saveGoods(goods);
             Intent intent = new Intent(this,HomePageActivity.class);
@@ -200,17 +221,13 @@ public class GoodsEdit extends AppCompatActivity{
         fileName = PathTools.getPath()+ "/" + imageId;
         try {
             fis = new FileInputStream(fileName);
-            picture.setImageBitmap(BipmapUtil.ZoomBipmap(fis, 16));
+            pictureEdit.setImageBitmap(BipmapUtil.ZoomBipmap(fis, 16));
             fis.close();
         }catch(FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void SetPicture(){
-
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
