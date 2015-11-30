@@ -1,11 +1,13 @@
-package com.example.zgq.actionbartest.util;
+package com.example.zgq.actionbartest.consumption_object;
+
+import com.example.zgq.actionbartest.util.DateTools;
 
 import java.io.Serializable;
 
 /**
  * Created by 37902 on 2015/10/15.
  */
-public class Goods implements Serializable{
+public class SingleConsumption extends Consumption implements Serializable{
     private double price;
     private String lable;
     private String date;
@@ -13,11 +15,11 @@ public class Goods implements Serializable{
     private String detail;
     private String imageId;
 
-    public Goods(){
+    public SingleConsumption(){
 
     }
 
-    public Goods(double price,String lable,String date,int happiness,String detail,String imageId){
+    public SingleConsumption(double price, String lable, String date, int happiness, String detail, String imageId){
         this.price = price;
         this.lable = lable;
         this.date = date;
@@ -68,6 +70,12 @@ public class Goods implements Serializable{
     public void setImageId(String imageId) {
         this.imageId = imageId;
     }
+
+    @Override
+    public String toString() {
+        return getLable();
+    }
+
     public String getImageName(){
         return DateTools.getDate(DateTools.DETAIL_TIME);
 

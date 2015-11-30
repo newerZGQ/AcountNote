@@ -1,19 +1,22 @@
 package com.example.zgq.actionbartest.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
 import com.example.zgq.actionbartest.db.DataOperate;
 import com.example.zgq.actionbartest.util.CreateDir;
-import com.example.zgq.actionbartest.util.Goods;
+import com.example.zgq.actionbartest.consumption_object.SingleConsumption;
+
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
-
+    public ArrayList<ArrayList<SingleConsumption>> goods;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         DataOperate.getInstance(this);
         CreateDir.createDir();

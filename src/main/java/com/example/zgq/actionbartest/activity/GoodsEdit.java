@@ -20,7 +20,7 @@ import com.example.zgq.actionbartest.R;
 import com.example.zgq.actionbartest.db.DataOperate;
 import com.example.zgq.actionbartest.util.BipmapUtil;
 import com.example.zgq.actionbartest.util.DateTools;
-import com.example.zgq.actionbartest.util.Goods;
+import com.example.zgq.actionbartest.consumption_object.SingleConsumption;
 import com.example.zgq.actionbartest.util.PathTools;
 
 import java.io.File;
@@ -35,7 +35,7 @@ public class GoodsEdit extends AppCompatActivity{
 
     private Boolean isInitial;
 
-    private Goods goods;
+    private SingleConsumption singleConsumption;
 //    显示照片控件
     private ImageView pictureEdit;
 //    编辑价钱控件
@@ -156,11 +156,11 @@ public class GoodsEdit extends AppCompatActivity{
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
             startActivityForResult(intent, 1);
         }
-    public void setContent(Goods goods){
-        priceEdit.setText(""+goods.getPrice());
-        detailEdit.setText(goods.getDetail());
+    public void setContent(SingleConsumption singleConsumption){
+        priceEdit.setText(""+ singleConsumption.getPrice());
+        detailEdit.setText(singleConsumption.getDetail());
 
-        String fileName = PathTools.getPath()+ "/" + goods.getImageId();
+        String fileName = PathTools.getPath()+ "/" + singleConsumption.getImageId();
         try {
             fis = new FileInputStream(fileName);
             pictureEdit.setImageBitmap(BipmapUtil.ZoomBipmap(fis, 16));
@@ -185,8 +185,8 @@ public class GoodsEdit extends AppCompatActivity{
         }
 
         if (isInitial == false) {
-            goods = (Goods) getIntent().getSerializableExtra("goods");
-            setContent(goods);
+            singleConsumption = (SingleConsumption) getIntent().getSerializableExtra("singleConsumption");
+            setContent(singleConsumption);
         }
     }
 //       创建菜单
@@ -206,16 +206,16 @@ public class GoodsEdit extends AppCompatActivity{
             if (isInitial == true) {
                 goodsPrice = Double.valueOf((priceEdit.getText().toString()));
                 goodsDetail = detailEdit.getText().toString();
-                Goods goods = new Goods(goodsPrice, goodsLable, date, goodsHappiness, goodsDetail, imageId);
-                DataOperate.saveGoods(goods);
+                SingleConsumption singleConsumption = new SingleConsumption(goodsPrice, goodsLable, date, goodsHappiness, goodsDetail, imageId);
+                DataOperate.saveGoods(singleConsumption);
                 Intent intent = new Intent(this, HomePageActivity.class);
                 startActivity(intent);
                 return true;
             }else {
                 goodsPrice = Double.valueOf((priceEdit.getText().toString()));
                 goodsDetail = detailEdit.getText().toString();
-                Goods goods = new Goods(goodsPrice, this.goods.getLable(), this.goods.getDate(), this.goods.getHappines(), goodsDetail, this.goods.getImageId());
-                DataOperate.saveGoods(goods);
+                SingleConsumption singleConsumption = new SingleConsumption(goodsPrice, this.singleConsumption.getLable(), this.singleConsumption.getDate(), this.singleConsumption.getHappines(), goodsDetail, this.singleConsumption.getImageId());
+                DataOperate.saveGoods(singleConsumption);
                 Intent intent = new Intent(this, HomePageActivity.class);
                 startActivity(intent);
                 return true;

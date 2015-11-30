@@ -2,12 +2,8 @@ package com.example.zgq.actionbartest.fragment;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,20 +15,19 @@ import com.example.zgq.actionbartest.R;
 import com.example.zgq.actionbartest.activity.GoodsEdit;
 import com.example.zgq.actionbartest.db.DataOperate;
 import com.example.zgq.actionbartest.util.BipmapUtil;
-import com.example.zgq.actionbartest.util.Goods;
+import com.example.zgq.actionbartest.consumption_object.SingleConsumption;
 import com.example.zgq.actionbartest.util.PathTools;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.UUID;
 
 /**
  * Created by 37902 on 2015/11/28.
  */
 public class GoodsShowFragment extends Fragment implements View.OnClickListener{
 
-    private Goods goods;
+    private SingleConsumption singleConsumption;
     //    文件流
     private FileInputStream fis;
     //    消费记录在数据库中的id
@@ -76,11 +71,11 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
 
 //        priceShow = (TextView) view.findViewById(R.id.price_show);
 
-        goods = DataOperate.getGoods(id);
-        priceShow.setText(""+goods.getPrice());
-        detailShow.setText(goods.getDetail());
+        singleConsumption = DataOperate.getGoods(id);
+        priceShow.setText(""+ singleConsumption.getPrice());
+        detailShow.setText(singleConsumption.getDetail());
 
-        String fileName = PathTools.getPath()+ "/" + goods.getImageId();
+        String fileName = PathTools.getPath()+ "/" + singleConsumption.getImageId();
         try {
             fis = new FileInputStream(fileName);
             pictureShow.setImageBitmap(BipmapUtil.ZoomBipmap(fis, 6));
@@ -98,7 +93,7 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
         Intent intent = new Intent(getActivity(), GoodsEdit.class);
         intent.putExtra("id", id);
         intent.putExtra("isInitial",false);
-        intent.putExtra("goods",goods);
+        intent.putExtra("singleConsumption", singleConsumption);
         startActivity(intent);
 //        Log.d("click","---");
 
