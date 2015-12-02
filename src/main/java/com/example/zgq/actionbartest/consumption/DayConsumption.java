@@ -1,4 +1,4 @@
-package com.example.zgq.actionbartest.consumption_object;
+package com.example.zgq.actionbartest.consumption;
 
 import java.io.Serializable;
 import java.util.ArrayList;

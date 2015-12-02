@@ -10,7 +10,7 @@ import android.util.Log;
 
 import com.example.zgq.actionbartest.fragment.GoodsShowFragment;
 import com.example.zgq.actionbartest.util.DateTools;
-import com.example.zgq.actionbartest.consumption_object.SingleConsumption;
+import com.example.zgq.actionbartest.consumption.SingleConsumption;
 
 import java.util.ArrayList;
 

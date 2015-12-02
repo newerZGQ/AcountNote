@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.zgq.actionbartest.consumption_object.Consumption;
 import com.example.zgq.actionbartest.fragment.GoodsLIstFragment;
 import com.example.zgq.actionbartest.R;
 

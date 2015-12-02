@@ -15,7 +15,7 @@ import com.example.zgq.actionbartest.R;
 import com.example.zgq.actionbartest.activity.GoodsEdit;
 import com.example.zgq.actionbartest.db.DataOperate;
 import com.example.zgq.actionbartest.util.BipmapUtil;
-import com.example.zgq.actionbartest.consumption_object.SingleConsumption;
+import com.example.zgq.actionbartest.consumption.SingleConsumption;
 import com.example.zgq.actionbartest.util.PathTools;
 
 import java.io.FileInputStream;

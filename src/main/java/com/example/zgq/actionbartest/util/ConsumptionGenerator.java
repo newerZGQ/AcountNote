@@ -1,8 +1,8 @@
 package com.example.zgq.actionbartest.util;
 
-import com.example.zgq.actionbartest.consumption_object.Consumption;
-import com.example.zgq.actionbartest.consumption_object.DayConsumption;
-import com.example.zgq.actionbartest.consumption_object.SingleConsumption;
+import com.example.zgq.actionbartest.consumption.Consumption;
+import com.example.zgq.actionbartest.consumption.DayConsumption;
+import com.example.zgq.actionbartest.consumption.SingleConsumption;
 
 import java.util.ArrayList;
 
@@ -19,10 +19,10 @@ public class ConsumptionGenerator {
             if (i%7 == 0) {
                 DayConsumption dayConsumption = new DayConsumption();
                 monthConsumption.add(dayConsumption);
-            }
+            }else {
             SingleConsumption singleConsumption = new SingleConsumption(i,"cloth",null,5,null,null);
 
-            monthConsumption.add(singleConsumption);
+            monthConsumption.add(singleConsumption);}
         }
         return monthConsumption;
     }

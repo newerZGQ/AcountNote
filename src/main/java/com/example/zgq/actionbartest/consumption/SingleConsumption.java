@@ -1,4 +1,4 @@
-package com.example.zgq.actionbartest.consumption_object;
+package com.example.zgq.actionbartest.consumption;
 
 import com.example.zgq.actionbartest.util.DateTools;
 
@@ -8,6 +8,7 @@ import java.io.Serializable;
  * Created by 37902 on 2015/10/15.
  */
 public class SingleConsumption extends Consumption implements Serializable{
+    public static final boolean isSingleConsumption = true;
     private double price;
     private String lable;
     private String date;
@@ -73,7 +74,7 @@ public class SingleConsumption extends Consumption implements Serializable{
 
     @Override
     public String toString() {
-        return getLable();
+        return "single";
     }
 
     public String getImageName(){
