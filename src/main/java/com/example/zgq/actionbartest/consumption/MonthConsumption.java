@@ -7,6 +7,11 @@ import java.io.Serializable;
  */
 public class MonthConsumption extends Consumption implements Serializable {
     @Override
+    public boolean isSingleCon() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "月";
     }

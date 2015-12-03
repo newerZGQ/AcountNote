@@ -75,21 +75,21 @@ public class DataOperate {
         Log.d("count", "" + count);
         return count;
     }
-    public static ArrayList<Fragment> getFragmentList(int id){
-        currentItemPosition = 0;
-        ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
-        Cursor myCursor = db.query(currentTable,new String[]{"id as _id","price","lable","date","happiness","detail","imageId"},null,null,null,null,null);
-        myCursor.moveToFirst();
-        fragmentList.add(GoodsShowFragment.newInstance(myCursor.getInt(0)));
-        while(myCursor.moveToNext()) {
-            int currentId = myCursor.getInt(0);
-            fragmentList.add(GoodsShowFragment.newInstance(currentId));
-            if (id >= currentId)
-                currentItemPosition++;
-        }
-        myCursor.close();
-        return fragmentList;
-    }
+//    public static ArrayList<Fragment> getFragmentList(int id){
+//        currentItemPosition = 0;
+//        ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
+//        Cursor myCursor = db.query(currentTable,new String[]{"id as _id","price","lable","date","happiness","detail","imageId"},null,null,null,null,null);
+//        myCursor.moveToFirst();
+//        fragmentList.add(GoodsShowFragment.newInstance(myCursor.getInt(0)));
+//        while(myCursor.moveToNext()) {
+//            int currentId = myCursor.getInt(0);
+//            fragmentList.add(GoodsShowFragment.newInstance(currentId));
+//            if (id >= currentId)
+//                currentItemPosition++;
+//        }
+//        myCursor.close();
+//        return fragmentList;
+//    }
     public static double getCONSUMPTION(String tableName) {
         double consumption = 0;
         Cursor myCursor = db.query(tableName, new String[]{"id as _id", "price", "lable", "date", "happiness", "detail", "imageId"}, null, null, null, null, null);

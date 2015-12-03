@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.zgq.actionbartest.db.DataOperate;
+import com.example.zgq.actionbartest.util.ConsumptionGenerator;
 import com.example.zgq.actionbartest.util.CreateDir;
 import com.example.zgq.actionbartest.consumption.SingleConsumption;
 
@@ -15,8 +16,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        ConsumptionGenerator.setMonthConsumptions();
+        ConsumptionGenerator.setSingleConsumptions(ConsumptionGenerator.monthConsumptions);
 
         DataOperate.getInstance(this);
         CreateDir.createDir();
@@ -24,12 +25,4 @@ public class MainActivity extends Activity {
         startActivity(intent);
         this.finish();
     }
-
-//    dbHelper = new GoodsData(this, "GoodsStore.db", null, 1);
-//
-//    takePhoto.setOnClickListener(new View.OnClickListener() {
-//     public void onClick(View v) {
-//      dbHelper.getWritableDatabase();
-//      }
-//     });
 }

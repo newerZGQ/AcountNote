@@ -13,25 +13,25 @@ import android.widget.TextView;
 
 import com.example.zgq.actionbartest.R;
 import com.example.zgq.actionbartest.activity.GoodsEdit;
-import com.example.zgq.actionbartest.db.DataOperate;
 import com.example.zgq.actionbartest.util.BipmapUtil;
 import com.example.zgq.actionbartest.consumption.SingleConsumption;
+import com.example.zgq.actionbartest.util.ConsumptionGenerator;
 import com.example.zgq.actionbartest.util.PathTools;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by 37902 on 2015/11/28.
  */
 public class GoodsShowFragment extends Fragment implements View.OnClickListener{
 
+
     private SingleConsumption singleConsumption;
     //    文件流
     private FileInputStream fis;
-    //    消费记录在数据库中的id
-    private int id;
 
     private View view;
     //    pictureShow
@@ -55,7 +55,7 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
 
     private Bitmap bitmap;
 
-    public void goodsShow(int id){
+    public void goodsShow(SingleConsumption singleConsumption){
         pictureShow = (ImageView) view.findViewById(R.id.picture_show);
         priceShow = (TextView) view.findViewById(R.id.price_show);
         lableShow = (ImageView) view.findViewById(R.id.lable_show);
@@ -68,10 +68,6 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
         editButton = (Button) view.findViewById(R.id.edit);
 
         editButton.setOnClickListener(this);
-
-//        priceShow = (TextView) view.findViewById(R.id.price_show);
-
-        singleConsumption = DataOperate.getGoods(id);
         priceShow.setText(""+ singleConsumption.getPrice());
         detailShow.setText(singleConsumption.getDetail());
 
@@ -87,21 +83,22 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
         } finally {
         }
     }
-    @Override
+//    @Override
     public void onClick(View v) {
 //                Log.d("click","---");
         Intent intent = new Intent(getActivity(), GoodsEdit.class);
-        intent.putExtra("id", id);
-        intent.putExtra("isInitial",false);
         intent.putExtra("singleConsumption", singleConsumption);
+        intent.putExtra("isInitial",false);
         startActivity(intent);
 //        Log.d("click","---");
 
     }
-
-    public static GoodsShowFragment newInstance(int id){
+    public GoodsShowFragment(){
+        super();
+    }
+    public static GoodsShowFragment newInstance(SingleConsumption singleConsumption){
         Bundle args = new Bundle();
-        args.putInt("id", id);
+        args.putSerializable("singleConsumption", singleConsumption);
         GoodsShowFragment goodsShowFragment = new GoodsShowFragment();
         goodsShowFragment.setArguments(args);
         return goodsShowFragment;
@@ -109,12 +106,12 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        id = getArguments().getInt("id");
+        singleConsumption = (SingleConsumption) getArguments().getSerializable("singleConsumption");
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.goods_fragment,container,false);
-        goodsShow(id);
+        goodsShow(singleConsumption);
         return  view;
     }
 }

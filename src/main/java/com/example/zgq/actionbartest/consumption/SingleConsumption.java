@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by 37902 on 2015/10/15.
  */
 public class SingleConsumption extends Consumption implements Serializable{
-    public static final boolean isSingleConsumption = true;
+    public static boolean isSingleCon = true;
     private double price;
     private String lable;
     private String date;
@@ -71,15 +71,22 @@ public class SingleConsumption extends Consumption implements Serializable{
     public void setImageId(String imageId) {
         this.imageId = imageId;
     }
-
-    @Override
-    public String toString() {
-        return "single";
-    }
-
     public String getImageName(){
         return DateTools.getDate(DateTools.DETAIL_TIME);
+    }
 
+    @Override
+    public boolean isSingleCon() {
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (price == ((SingleConsumption)o).getPrice() && date.equals(((SingleConsumption)o).getDate())){
+            return true;
+        }
+        return false;
     }
 }
 

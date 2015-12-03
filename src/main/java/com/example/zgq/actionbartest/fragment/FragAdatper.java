@@ -19,12 +19,12 @@ import java.util.ArrayList;
  */
 public class FragAdatper extends FragmentStatePagerAdapter {
 
-    private ArrayList<Fragment> fragmentList;
+    private ArrayList<GoodsShowFragment> fragmentList;
 
     public FragAdatper(FragmentManager fragmentManager){
         super(fragmentManager);
     }
-    public FragAdatper(FragmentManager fragmentManager,ArrayList<Fragment> fragmentList){
+    public FragAdatper(FragmentManager fragmentManager,ArrayList<GoodsShowFragment> fragmentList){
         super(fragmentManager);
         this.fragmentList = fragmentList;
     }
@@ -35,7 +35,7 @@ public class FragAdatper extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public GoodsShowFragment getItem(int position) {
         return fragmentList.get(position);
     }
 }

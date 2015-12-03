@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.zgq.actionbartest.fragment.GoodsLIstFragment;
+import com.example.zgq.actionbartest.fragment.GoodsListFragment;
 import com.example.zgq.actionbartest.R;
 
 public class HomePageActivity extends AppCompatActivity {
@@ -96,7 +96,7 @@ public class HomePageActivity extends AppCompatActivity {
         Fragment fragment = fragmentManager.findFragmentById(R.id.fragmentContainer);
 
         if (fragment == null){
-            fragment = new GoodsLIstFragment();
+            fragment = new GoodsListFragment();
             fragmentManager.beginTransaction()
                     .add(R.id.fragmentContainer,fragment)
                     .commit();
