@@ -8,12 +8,16 @@ import java.util.ArrayList;
  */
 public class DayConsumption extends Consumption implements Serializable {
     public static boolean isSingleCon = false;
-    private double dayConsumption;
-    private String date;
-    public DayConsumption(){
+    private double dayTotal;
+    private String dayDate;
+    public DayConsumption(double dayTotal,String dayDate){
         super();
+        this.dayTotal = dayTotal;
+        this.dayDate = dayDate;
     }
-
+    public double getDayTotal(){
+        return dayTotal;
+    }
     public double getDayConsumption(ArrayList<SingleConsumption> arrayList){
         double dayConsumption = 0;
         for (SingleConsumption s : arrayList){

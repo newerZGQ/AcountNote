@@ -206,17 +206,19 @@ public class GoodsEdit extends AppCompatActivity{
             if (isInitial == true) {
                 goodsPrice = Double.valueOf((priceEdit.getText().toString()));
                 goodsDetail = detailEdit.getText().toString();
-                SingleConsumption singleConsumption = new SingleConsumption(goodsPrice, goodsLable, date, goodsHappiness, goodsDetail, imageId);
-                DataOperate.saveGoods(singleConsumption);
+                SingleConsumption single = new SingleConsumption(goodsPrice, goodsLable, date, goodsHappiness, goodsDetail, imageId);
+                DataOperate.saveGoods(single);
+                DataOperate.addSingleCon(single);
                 Intent intent = new Intent(this, HomePageActivity.class);
                 startActivity(intent);
                 return true;
             }else {
                 goodsPrice = Double.valueOf((priceEdit.getText().toString()));
                 goodsDetail = detailEdit.getText().toString();
-                SingleConsumption singleConsumption = new SingleConsumption(goodsPrice, this.singleConsumption.getLable(), this.singleConsumption.getDate(), this.singleConsumption.getHappines(), goodsDetail, this.singleConsumption.getImageId());
-                DataOperate.saveGoods(singleConsumption);
-                Intent intent = new Intent(this, HomePageActivity.class);
+                SingleConsumption single = new SingleConsumption(goodsPrice, this.singleConsumption.getLable(), this.singleConsumption.getDate(), this.singleConsumption.getHappines(), goodsDetail, this.singleConsumption.getImageId());
+                DataOperate.changeSingle(singleConsumption,single);
+                Intent intent = new Intent(this, GoodsShow.class);
+                intent.putExtra("singleConsumption1",single);
                 startActivity(intent);
                 return true;
             }
@@ -240,9 +242,15 @@ public class GoodsEdit extends AppCompatActivity{
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            finish();
-            System.exit(0);
-            return false;
+            if (isInitial == true) {
+                Intent intent = new Intent(this, HomePageActivity.class);
+                startActivity(intent);
+                return true;
+            }else {
+                Intent intent = new Intent(this, GoodsShow.class);
+                startActivity(intent);
+                return true;
+            }
         }
         return super.onKeyDown(keyCode, event);
     }

@@ -15,22 +15,25 @@ import com.example.zgq.actionbartest.activity.GoodsShow;
 import com.example.zgq.actionbartest.consumption.Consumption;
 import com.example.zgq.actionbartest.consumption.DayConsumption;
 import com.example.zgq.actionbartest.consumption.SingleConsumption;
-import com.example.zgq.actionbartest.util.ConsumptionGenerator;
+import com.example.zgq.actionbartest.db.DataOperate;
 
 import java.util.ArrayList;
+
 
 /**
  * Created by 37902 on 2015/11/30.
  */
-public class GoodsListFragment extends ListFragment {
-    public static ArrayList<Consumption> monthConsumption;
-
+public class GoodsListFragment extends ListFragment{
+    public static ArrayList<Consumption> monthConsumptions;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        monthConsumption = ConsumptionGenerator.monthConsumptions;
-        ConsumptionListAdapter consumptionListAdapter = new ConsumptionListAdapter(monthConsumption);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        monthConsumptions = DataOperate.monthConsumptions;
+        ConsumptionListAdapter consumptionListAdapter = new ConsumptionListAdapter(monthConsumptions);
         setListAdapter(consumptionListAdapter);
     }
 
@@ -44,29 +47,29 @@ public class GoodsListFragment extends ListFragment {
         }
     }
 
-        public class ConsumptionListAdapter extends ArrayAdapter<Consumption> {
-            public ConsumptionListAdapter(ArrayList<Consumption> arrayLists) {
-                super(getActivity(), 0, arrayLists);
+    public class ConsumptionListAdapter extends ArrayAdapter<Consumption> {
+        public ArrayList<Consumption> consumptions;
+        public ConsumptionListAdapter(ArrayList<Consumption> arrayLists) {
+            super(getActivity(), 0, arrayLists);
+            consumptions = arrayLists;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            Consumption consumption = consumptions.get(position);
+            if (consumption.isSingleCon()) {
+                SingleConsumption singleConsumption = (SingleConsumption) consumption;
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_fragment_single, null);
+                TextView price = (TextView) convertView.findViewById(R.id.price);
+                price.setText("" + singleConsumption.getPrice());
+
+            } else {
+                DayConsumption dayConsumption = (DayConsumption) consumption;
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_fragment_day, null);
+                TextView date = (TextView) convertView.findViewById(R.id.day_date);
+                date.setText(""+dayConsumption.getDayTotal());
             }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-
-                Consumption consumption = monthConsumption.get(position);
-                if (consumption.isSingleCon()) {
-                    SingleConsumption singleConsumption = (SingleConsumption) consumption;
-                    convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_fragment_single, null);
-                    TextView price = (TextView) convertView.findViewById(R.id.price);
-                    price.setText("" + singleConsumption.getPrice());
-
-                } else {
-                    DayConsumption dayConsumption = (DayConsumption) consumption;
-                    convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_fragment_day, null);
-                    TextView date = (TextView) convertView.findViewById(R.id.day_date);
-                    date.setText(dayConsumption.toString());
-                }
-                return convertView;
-            }
+            return convertView;
         }
     }
+}

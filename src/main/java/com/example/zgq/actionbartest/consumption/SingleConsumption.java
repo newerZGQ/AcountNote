@@ -88,5 +88,10 @@ public class SingleConsumption extends Consumption implements Serializable{
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return date;
+    }
 }
 

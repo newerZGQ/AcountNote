@@ -21,15 +21,20 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.HomePageActivity"
+        <activity
+            android:name=".activity.HomePageActivity"
             android:theme="@style/AppTheme.Base"
             android:launchMode="singleTask" />
 
-        <activity android:name=".activity.GoodsEdit"
+        <activity
+            android:name=".activity.GoodsEdit"
             android:theme="@style/AppTheme.Base"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTask"/>
 
-        <activity android:name=".activity.GoodsShow"/>
+        <activity
+            android:name=".activity.GoodsShow"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

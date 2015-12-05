@@ -85,12 +85,10 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
     }
 //    @Override
     public void onClick(View v) {
-//                Log.d("click","---");
         Intent intent = new Intent(getActivity(), GoodsEdit.class);
         intent.putExtra("singleConsumption", singleConsumption);
         intent.putExtra("isInitial",false);
         startActivity(intent);
-//        Log.d("click","---");
 
     }
     public GoodsShowFragment(){
@@ -113,5 +111,10 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
         view = inflater.inflate(R.layout.goods_fragment,container,false);
         goodsShow(singleConsumption);
         return  view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

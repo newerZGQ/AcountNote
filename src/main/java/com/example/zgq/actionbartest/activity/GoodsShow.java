@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.zgq.actionbartest.R;
 import com.example.zgq.actionbartest.consumption.SingleConsumption;
+import com.example.zgq.actionbartest.db.DataOperate;
 import com.example.zgq.actionbartest.fragment.FragAdatper;
 import com.example.zgq.actionbartest.fragment.GoodsListFragment;
 import com.example.zgq.actionbartest.fragment.GoodsShowFragment;
@@ -29,38 +30,32 @@ public class GoodsShow extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        fragmentList = new ArrayList<>();
-        singleConsumption = (SingleConsumption) getIntent().getSerializableExtra("singleConsumption");
-        singleConsumptions = ConsumptionGenerator.singleConsumptions;
-        for (SingleConsumption single:singleConsumptions){
-//            int a= 0;
-//            if (!(single.getPrice()==singleConsumption.getPrice())){
-//                a +=1;
-//                Log.d("----------------",""+a);
-//            }else{
-//                currentPosition = a;
-//            }
-            GoodsShowFragment fragment = GoodsShowFragment.newInstance(single);
-            fragmentList.add(fragment);
-        }
-        Log.d("-----------------",""+currentPosition);
-        currentPosition = singleConsumptions.indexOf(singleConsumption);
-        Boolean b = singleConsumptions.contains(singleConsumption);
-        if (b){
-            Log.d("-----------------","true");
-        }
-        setContentView(R.layout.goods_show);
-        mViewPager = (ViewPager)findViewById(R.id.pager);
-        mViewPager.setAdapter(new FragAdatper(getSupportFragmentManager(), fragmentList));
-        Log.d("-----------------",""+currentPosition);
-        mViewPager.setCurrentItem(currentPosition);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        singleConsumptions = ConsumptionGenerator.singleConsumptions;
+        singleConsumptions = DataOperate.singleConsumptions;
+        fragmentList = new ArrayList<>();
+        for (SingleConsumption single:singleConsumptions){
+            GoodsShowFragment fragment = GoodsShowFragment.newInstance(single);
+            fragmentList.add(fragment);
+        }
+        if (singleConsumption == null) {
+            singleConsumption = (SingleConsumption) getIntent().getSerializableExtra("singleConsumption");
+            Log.d("--------","1");
+            Log.d("--------",""+singleConsumption.getPrice());
+        }else{
+            singleConsumption = (SingleConsumption) getIntent().getSerializableExtra("singleConsumption1");
+            Log.d("--------","2");
+            Log.d("--------",""+singleConsumption.getPrice());
+        }
+        currentPosition = singleConsumptions.indexOf(singleConsumption);
+        Log.d("--------",""+currentPosition);
+        setContentView(R.layout.goods_show);
+        mViewPager = (ViewPager)findViewById(R.id.pager);
+        mViewPager.setAdapter(new FragAdatper(getSupportFragmentManager(), fragmentList));
+        mViewPager.setCurrentItem(currentPosition);
     }
 }

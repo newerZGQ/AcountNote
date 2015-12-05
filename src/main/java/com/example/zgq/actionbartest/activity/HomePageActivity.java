@@ -2,6 +2,7 @@ package com.example.zgq.actionbartest.activity;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,7 +17,7 @@ import android.widget.Toast;
 import com.example.zgq.actionbartest.fragment.GoodsListFragment;
 import com.example.zgq.actionbartest.R;
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends FragmentActivity {
 
 //    点击拍照
     private ImageButton takePhoto;
@@ -24,6 +25,10 @@ public class HomePageActivity extends AppCompatActivity {
     private ImageButton acount;
     // 定义一个变量，来标识是否退出
     private static boolean isExit = false;
+
+    private Fragment fragment;
+
+    FragmentManager fragmentManager;
 
     Handler mHandler = new Handler() {
         @Override
@@ -92,15 +97,8 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.fragmentContainer);
-
-        if (fragment == null){
-            fragment = new GoodsListFragment();
-            fragmentManager.beginTransaction()
-                    .add(R.id.fragmentContainer,fragment)
-                    .commit();
-        }
+        fragmentManager = getSupportFragmentManager();
+        fragment = fragmentManager.findFragmentById(R.id.fragmentContainer);
 
         takePhoto = (ImageButton) findViewById(R.id.take_photo);
 
@@ -113,21 +111,21 @@ public class HomePageActivity extends AppCompatActivity {
             }
 
         });
-
-//        ArrayList<? extends Consumption> arrayLists = ConsumptionGenerator.monthConsumptionGenerator();
-//        for (ArrayList ar:arrayLists)
-//            for (int i=0;i<7;i++){
-//                SingleConsumption goods =(SingleConsumption) ar.get(i);
-//                Log.d("ArrayList",""+goods.toString());
-//            }
-
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        listViewShow();
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (fragment == null) {
+            fragment = new GoodsListFragment();
+            fragmentManager.beginTransaction()
+                    .add(R.id.fragmentContainer, fragment)
+                    .commit();
+        }else{
+            getSupportFragmentManager().findFragmentById(R.id.fragmentContainer).onResume();
+        }
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -156,20 +154,5 @@ public class HomePageActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.clothing_item) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 }
 

@@ -16,11 +16,12 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ConsumptionGenerator.setMonthConsumptions();
-        ConsumptionGenerator.setSingleConsumptions(ConsumptionGenerator.monthConsumptions);
-
-        DataOperate.getInstance(this);
-        CreateDir.createDir();
+        DataOperate.initialData(this);
+//        DataOperate.setSingleConsumptions();
+//        DataOperate.setDayConsumptions();
+//
+//        DataOperate.getInstance(this);
+//        CreateDir.createDir();
         Intent intent = new Intent(MainActivity.this,HomePageActivity.class);
         startActivity(intent);
         this.finish();

@@ -8,9 +8,9 @@ import com.example.zgq.actionbartest.db.DataOperate;
 public class Acount {
     //    public static double CREDIT_CARD;
 //    public static double CONSUMPTION;
-    public static double getCONSUMPTION() {
-        return DataOperate.getCONSUMPTION(DataOperate.currentTable);
-    }
+//    public static double getCONSUMPTION() {
+////        return DataOperate.getCONSUMPTION(DataOperate.currentTable);
+//    }
 }
 //    public static void setConsumption(double consumption){
 //        CONSUMPTION = consumption;
