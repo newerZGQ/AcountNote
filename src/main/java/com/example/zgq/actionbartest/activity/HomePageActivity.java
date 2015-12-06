@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -16,17 +17,18 @@ import android.widget.Toast;
 
 import com.example.zgq.actionbartest.fragment.GoodsListFragment;
 import com.example.zgq.actionbartest.R;
+import com.example.zgq.actionbartest.fragment.HomeBottomFrag;
+import com.example.zgq.actionbartest.fragment.HomeTopFrag;
 
 public class HomePageActivity extends FragmentActivity {
-
-//    点击拍照
-    private ImageButton takePhoto;
-//    报表按钮
-    private ImageButton acount;
     // 定义一个变量，来标识是否退出
     private static boolean isExit = false;
 
-    private Fragment fragment;
+    private Fragment fragmentList;
+
+    private Fragment fragmentBottom;
+
+    private Fragment fragmentTop;
 
     FragmentManager fragmentManager;
 
@@ -98,33 +100,35 @@ public class HomePageActivity extends FragmentActivity {
         setContentView(R.layout.homepage);
 
         fragmentManager = getSupportFragmentManager();
-        fragment = fragmentManager.findFragmentById(R.id.fragmentContainer);
-
-        takePhoto = (ImageButton) findViewById(R.id.take_photo);
-
-        takePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomePageActivity.this, GoodsEdit.class);
-                intent.putExtra("isInitial", true);
-                startActivity(intent);
-            }
-
-        });
+        fragmentList = fragmentManager.findFragmentById(R.id.fragmentList);
+        fragmentBottom = fragmentManager.findFragmentById(R.id.fragmentBottom);
+        fragmentTop = fragmentManager.findFragmentById(R.id.fragmentTop);
+        if (fragmentBottom == null){
+            fragmentBottom  = new HomeBottomFrag();
+            fragmentManager.beginTransaction()
+                    .add(R.id.fragmentBottom, fragmentBottom)
+                    .commit();
+        }
+        if (fragmentTop== null){
+            fragmentTop  = new HomeTopFrag();
+            fragmentManager.beginTransaction()
+                    .add(R.id.fragmentTop, fragmentTop)
+                    .commit();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (fragment == null) {
-            fragment = new GoodsListFragment();
+        if (fragmentList == null) {
+            fragmentList = new GoodsListFragment();
             fragmentManager.beginTransaction()
-                    .add(R.id.fragmentContainer, fragment)
+                    .add(R.id.fragmentList, fragmentList)
                     .commit();
         }else{
-            getSupportFragmentManager().findFragmentById(R.id.fragmentContainer).onResume();
+            getSupportFragmentManager().findFragmentById(R.id.fragmentList).onResume();
         }
+//        getFragmentManager().findFragmentById(R.id.fragmentTop).onResume();
     }
 
     @Override

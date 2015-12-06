@@ -10,7 +10,7 @@ import com.example.zgq.actionbartest.util.DateTools;
  * Created by 37902 on 2015/10/23.
  */
 public class GoodsDBHelper extends SQLiteOpenHelper {
-//    String tableName = "consump"+DateTools.getDate(true);
+//    public static String tableName = "c"+DateTools.getDate(true);
     public void creatTable(String tableName,SQLiteDatabase db){
         String CREATE_CONSUMPTION = "create table "+tableName+" ("
                 + "id integer primary key autoincrement, "
@@ -22,7 +22,7 @@ public class GoodsDBHelper extends SQLiteOpenHelper {
                 + "imageId text)";
         db.execSQL(CREATE_CONSUMPTION);
     }
-//    public static String CREATE_CONSUMPTION = "create table goods ("
+//    public static String CREATE_CONSUMPTION = "create table "+tableName+" ("
 //            + "id integer primary key autoincrement, "
 //            + "price real, "
 //            + "lable text, "
@@ -31,7 +31,7 @@ public class GoodsDBHelper extends SQLiteOpenHelper {
 //            + "happiness integer, "
 //            + "imageId text)";
 
-//    private Context mContext;
+    private Context mContext;
 
     @Override
     public SQLiteDatabase getWritableDatabase() {

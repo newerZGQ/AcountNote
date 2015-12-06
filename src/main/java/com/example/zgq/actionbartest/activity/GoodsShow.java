@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class GoodsShow extends FragmentActivity {
     private ArrayList<SingleConsumption> singleConsumptions;
     private SingleConsumption singleConsumption;
+    private SingleConsumption singleConsumption1;
     private ArrayList<GoodsShowFragment> fragmentList;
     private ViewPager mViewPager;
     public String date;
@@ -44,15 +45,8 @@ public class GoodsShow extends FragmentActivity {
         }
         if (singleConsumption == null) {
             singleConsumption = (SingleConsumption) getIntent().getSerializableExtra("singleConsumption");
-            Log.d("--------","1");
-            Log.d("--------",""+singleConsumption.getPrice());
-        }else{
-            singleConsumption = (SingleConsumption) getIntent().getSerializableExtra("singleConsumption1");
-            Log.d("--------","2");
-            Log.d("--------",""+singleConsumption.getPrice());
+            currentPosition = singleConsumptions.indexOf(singleConsumption);
         }
-        currentPosition = singleConsumptions.indexOf(singleConsumption);
-        Log.d("--------",""+currentPosition);
         setContentView(R.layout.goods_show);
         mViewPager = (ViewPager)findViewById(R.id.pager);
         mViewPager.setAdapter(new FragAdatper(getSupportFragmentManager(), fragmentList));
