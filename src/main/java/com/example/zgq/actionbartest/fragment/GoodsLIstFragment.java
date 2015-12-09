@@ -6,7 +6,9 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,6 +37,9 @@ public class GoodsListFragment extends ListFragment{
         monthConsumptions = DataOperate.monthConsumptions;
         ConsumptionListAdapter consumptionListAdapter = new ConsumptionListAdapter(monthConsumptions);
         setListAdapter(consumptionListAdapter);
+        getListView().requestFocus();
+        getListView().setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        getListView().setSelection(monthConsumptions.size()-1);
     }
 
     @Override
@@ -54,22 +59,34 @@ public class GoodsListFragment extends ListFragment{
             consumptions = arrayLists;
         }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            Consumption consumption = consumptions.get(position);
-            if (consumption.isSingleCon()) {
-                SingleConsumption singleConsumption = (SingleConsumption) consumption;
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_fragment_single, null);
-                TextView price = (TextView) convertView.findViewById(R.id.price);
-                price.setText("" + singleConsumption.getPrice());
-
-            } else {
-                DayConsumption dayConsumption = (DayConsumption) consumption;
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_fragment_day, null);
-                TextView date = (TextView) convertView.findViewById(R.id.day_date);
-                date.setText(""+dayConsumption.getDayTotal());
-            }
-            return convertView;
-        }
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//            Consumption consumption = consumptions.get(position);
+//            if (consumption.isSingleCon()) {
+//                final SingleConsumption singleConsumption = (SingleConsumption) consumption;
+//                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_fragment_single, null);
+//                View linearLayout = convertView.findViewById(R.id.layoutItem);
+//                linearLayout.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent(getActivity(), GoodsShow.class);
+//                        intent.putExtra("singleConsumption", singleConsumption);
+//                        startActivity(intent);
+//                    }
+//                });
+//                TextView price = (TextView) convertView.findViewById(R.id.price);
+//                TextView date = (TextView)convertView.findViewById(R.id.date);
+//                TextView lable = (TextView) convertView.findViewById(R.id.lable);
+//                price.setText("" + singleConsumption.getPrice());
+//                date.setText(singleConsumption.getDate().substring(8,13));
+//                lable.setText(singleConsumption.getLable());
+//            } else {
+//                DayConsumption dayConsumption = (DayConsumption) consumption;
+//                convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_fragment_day, null);
+//                TextView date = (TextView) convertView.findViewById(R.id.day_date);
+//                date.setText("" + dayConsumption.getDayTotal());
+//            }
+//            return convertView;
+//        }
     }
 }

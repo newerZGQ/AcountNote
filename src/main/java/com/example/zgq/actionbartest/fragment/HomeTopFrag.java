@@ -37,10 +37,6 @@ public class HomeTopFrag extends Fragment implements View.OnClickListener{
         year = Integer.parseInt(date.substring(2, 4));
         month = Integer.parseInt(date.substring(4,6));
         Log.d("-----1",""+month);
-
-//        for (int i = 0;i<37;i++){
-//            year[i] = i+13;
-//        }
     }
     public boolean isSingleNum(int a){
         for (int b:months){
@@ -55,32 +51,23 @@ public class HomeTopFrag extends Fragment implements View.OnClickListener{
         switch (v.getId()){
             case R.id.previous:
                 month = month- 1;
-                Log.d("-----2",""+month);
                 if (month == 0){
                     month = 12;
                     year -=1;
-                    Log.d("-----3",""+month);
                 }
-                Log.d("-----4",""+month);
                 sMonth=""+month;
-                Log.d("-----5",""+month);
                 try {
                     if (isSingleNum(month)) {
                         sMonth = "0" + month;
                     }
-//                    DataOperate.setSingleConsumptions("c20" + year +sMonth);
                     DataOperate.changeData("c20" + year + sMonth);
-                    Log.d("-----6", "" + month);
                     getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentList).onResume();
-                    Log.d("---------------", "error");
                 }catch (Exception e){
                     month +=1;
-                    Log.d("-----7", "" + month);
                     if (month == 13){
                         month =1;
                         year +=1;
                     }
-                    Log.d("-----8", "" + month);
                     Toast.makeText(getActivity(), "别点了，没有记录了", Toast.LENGTH_SHORT).show();
                 }
                 onResume();
@@ -96,8 +83,6 @@ public class HomeTopFrag extends Fragment implements View.OnClickListener{
                 try {
                     if (isSingleNum(month))
                         sMonth = "0"+month;
-                    Log.d("----", sMonth);
-//                    DataOperate.setSingleConsumptions("c20" + year + sMonth);
                     DataOperate.changeData("c20" + year + sMonth);
                     getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentList).onResume();
                 }catch (Exception e){
@@ -125,7 +110,7 @@ public class HomeTopFrag extends Fragment implements View.OnClickListener{
         nextMonth = (ImageButton) view.findViewById(R.id.next);
         year_month = (TextView) view.findViewById(R.id.year_month);
         String date = DataOperate.singleConsumptions.get(0).getDate().substring(0, 6);
-        year_month.setText(date.substring(2, 4) + "年，" + date.substring(4, 6) + "月");
+        year_month.setText("  "+date.substring(2, 4) + "年 " + date.substring(4, 6) + "月"+"  ");
         prevMonth.setOnClickListener(this);
         nextMonth.setOnClickListener(this);
         return view;

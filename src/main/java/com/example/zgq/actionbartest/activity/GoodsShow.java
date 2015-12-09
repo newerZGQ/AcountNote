@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.example.zgq.actionbartest.R;
 import com.example.zgq.actionbartest.consumption.SingleConsumption;
@@ -32,6 +33,7 @@ public class GoodsShow extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class GoodsShow extends FragmentActivity {
             fragmentList.add(fragment);
         }
         if (singleConsumption == null) {
-            singleConsumption = (SingleConsumption) getIntent().getSerializableExtra("singleConsumption");
+            singleConsumption = (SingleConsumption) getIntent().getSerializableExtra("Consumption");
             currentPosition = singleConsumptions.indexOf(singleConsumption);
         }
         setContentView(R.layout.goods_show);

@@ -12,9 +12,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.zgq.actionbartest.fragment.ConsumListFrag;
 import com.example.zgq.actionbartest.fragment.GoodsListFragment;
 import com.example.zgq.actionbartest.R;
 import com.example.zgq.actionbartest.fragment.HomeBottomFrag;
@@ -97,6 +99,7 @@ public class HomePageActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.homepage);
 
         fragmentManager = getSupportFragmentManager();
@@ -121,7 +124,7 @@ public class HomePageActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         if (fragmentList == null) {
-            fragmentList = new GoodsListFragment();
+            fragmentList = new ConsumListFrag();
             fragmentManager.beginTransaction()
                     .add(R.id.fragmentList, fragmentList)
                     .commit();

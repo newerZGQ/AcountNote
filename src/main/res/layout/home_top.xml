@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="48dp">
-
-        <ImageButton
-            android:layout_width="75dp"
-            android:layout_height="48dp"
-            android:id="@+id/count" />
+    android:layout_height="80dp">
 
         <ImageButton
             android:id="@+id/previous"
-            android:layout_width="71dp"
-            android:layout_height="48dp" />
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/left_arrow"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/year_month" />
         <TextView
             android:id="@+id/year_month"
-            android:layout_width="106dp"
-            android:layout_height="48dp"
-            android:textSize="20sp"
-            android:text="2015 12"
-            android:layout_weight="1.09" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
         <ImageButton
             android:id="@+id/next"
-            android:layout_width="80dp"
-            android:layout_height="match_parent" />
+            android:layout_width="20dp"
+            android:background="@drawable/right_arrow"
+            android:layout_height="20dp"
+            android:layout_toEndOf="@+id/year_month"
+            android:layout_centerVertical="true" />
 
-</LinearLayout>
+</RelativeLayout>

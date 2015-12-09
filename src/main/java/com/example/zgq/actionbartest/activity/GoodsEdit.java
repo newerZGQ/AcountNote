@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -130,11 +131,8 @@ public class GoodsEdit extends AppCompatActivity{
         happinessImageButton5.setOnClickListener(listener);
 
         priceEdit.setCursorVisible(false);
-
     }
-
     public void takePhoto(){
-
 //        打开输出文件流并创建jpg文件
             date = DateTools.getDate(DateTools.DETAIL_TIME);
             imageId = date + ".jpg";
@@ -175,6 +173,7 @@ public class GoodsEdit extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.goods_edit);
 
         createView();

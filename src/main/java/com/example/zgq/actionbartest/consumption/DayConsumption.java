@@ -18,13 +18,16 @@ public class DayConsumption extends Consumption implements Serializable {
     public double getDayTotal(){
         return dayTotal;
     }
-    public double getDayConsumption(ArrayList<SingleConsumption> arrayList){
-        double dayConsumption = 0;
-        for (SingleConsumption s : arrayList){
-            dayConsumption += s.getPrice();
-        }
-        return dayConsumption;
+    public String getDayDate(){
+        return dayDate;
     }
+//    public double getDayConsumption(ArrayList<SingleConsumption> arrayList){
+//        double dayConsumption = 0;
+//        for (SingleConsumption s : arrayList){
+//            dayConsumption += s.getPrice();
+//        }
+//        return dayConsumption;
+//    }
 
     @Override
     public boolean isSingleCon() {
