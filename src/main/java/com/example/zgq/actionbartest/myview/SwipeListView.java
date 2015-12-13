@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
 
+import com.example.zgq.actionbartest.db.DataOperate;
+
 public class SwipeListView extends ListView {
     private Boolean mIsHorizontal;
 
@@ -63,6 +65,7 @@ public class SwipeListView extends ListView {
                 mFirstY = lastY;
                 int motionPosition = pointToPosition((int)mFirstX, (int)mFirstY);
 
+
                 if (motionPosition >= 0) {
                     View currentItemView = getChildAt(motionPosition - getFirstVisiblePosition());
                     mPreItemView = mCurrentItemView;
@@ -73,11 +76,11 @@ public class SwipeListView extends ListView {
             case MotionEvent.ACTION_MOVE:
                 float dx = lastX - mFirstX;
                 float dy = lastY - mFirstY;
-
                 if (Math.abs(dx) >= 5 && Math.abs(dy) >= 5) {
                     return true;
                 }
                 break;
+
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
@@ -91,7 +94,6 @@ public class SwipeListView extends ListView {
                      * 这时候点击任意一个item, 那么那个右边布局显示的item隐藏其右边布局
                      */
                     hiddenRight(mPreItemView);
-                    return false;
                 }
                 break;
         }
@@ -180,6 +182,9 @@ public class SwipeListView extends ListView {
                 break;
 
             case MotionEvent.ACTION_MOVE:
+//                if(!DataOperate.monthConsumptions.get(pointToPosition((int)mFirstX, (int)mFirstY)).isSingleCon()){
+//                    break;
+//                }
                 float dx = lastX - mFirstX;
                 float dy = lastY - mFirstY;
                 // confirm is scroll direction
@@ -393,8 +398,5 @@ public class SwipeListView extends ListView {
     public void setFooterAndHeaderCanSwipe(boolean footer, boolean header) {
         mIsHeaderCanSwipe = header;
         mIsFooterCanSwipe = footer;
-    }
-    public boolean getIsShown(){
-        return isShown();
     }
 }

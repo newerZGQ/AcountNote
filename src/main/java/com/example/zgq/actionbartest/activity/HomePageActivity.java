@@ -99,32 +99,32 @@ public class HomePageActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.homepage);
 
         fragmentManager = getSupportFragmentManager();
         fragmentList = fragmentManager.findFragmentById(R.id.fragmentList);
         fragmentBottom = fragmentManager.findFragmentById(R.id.fragmentBottom);
-        fragmentTop = fragmentManager.findFragmentById(R.id.fragmentTop);
+//        fragmentTop = fragmentManager.findFragmentById(R.id.fragmentTop);
         if (fragmentBottom == null){
             fragmentBottom  = new HomeBottomFrag();
             fragmentManager.beginTransaction()
                     .add(R.id.fragmentBottom, fragmentBottom)
                     .commit();
         }
-        if (fragmentTop== null){
-            fragmentTop  = new HomeTopFrag();
-            fragmentManager.beginTransaction()
-                    .add(R.id.fragmentTop, fragmentTop)
-                    .commit();
-        }
+//        if (fragmentTop== null){
+//            fragmentTop  = new HomeTopFrag();
+//            fragmentManager.beginTransaction()
+//                    .add(R.id.fragmentTop, fragmentTop)
+//                    .commit();
+//        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (fragmentList == null) {
-            fragmentList = new ConsumListFrag();
+            fragmentList = ConsumListFrag.getInstance(this);
             fragmentManager.beginTransaction()
                     .add(R.id.fragmentList, fragmentList)
                     .commit();

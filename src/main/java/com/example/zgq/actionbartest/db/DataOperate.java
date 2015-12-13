@@ -93,11 +93,11 @@ public class DataOperate extends Observable{
                 "2015120307:0102","2015120308:0102","2015120309:0102","2015120310:0102","2015120311:0102","2015120312:0102","2015120313:0102","2015120314:0102","2015120315:0102","2015120316:0102","2015120317:0102",
                 "2015120407:0102","2015120408:0102","2015120409:0102","2015120410:0102","2015120411:0102","2015120412:0102","2015120413:0102","2015120414:0102","2015120415:0102","2015120416:0102","2015120417:0102",
                 };
-        ArrayList<SingleConsumption> month = new ArrayList<>();
-        for (int i = 0; i<date.length; i++) {
-            SingleConsumption singleConsumption = new SingleConsumption(i, "cloth", date[i], 5, null, null);
-            saveGoods(singleConsumption);
-        }
+//        ArrayList<SingleConsumption> month = new ArrayList<>();
+//        for (int i = 0; i<date.length; i++) {
+//            SingleConsumption singleConsumption = new SingleConsumption(i, "cloth", date[i], 5, null, null);
+//            saveGoods(singleConsumption);
+//        }
         singleConsumptions = getSingleConsumptions(tableName);
     }
     public static ArrayList<SingleConsumption> getSingleConsumptions(String tableName){

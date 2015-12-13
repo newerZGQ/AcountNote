@@ -2,14 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     android:weightSum="1">
-    <FrameLayout
-        android:id="@+id/fragmentTop"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/hometoolbar"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
-
-    </FrameLayout>
+        android:layout_height="50dp"/>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragmentList"
@@ -17,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:layout_weight="1.00"
-        android:layout_below="@+id/fragmentTop"
+        android:layout_below="@+id/hometoolbar"
         android:layout_above="@+id/fragmentBottom">
     </FrameLayout>
     <FrameLayout

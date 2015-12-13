@@ -1,76 +1,46 @@
 package com.example.zgq.actionbartest.fragment;
 
-
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.example.zgq.actionbartest.R;
-import com.example.zgq.actionbartest.activity.GoodsShow;
 import com.example.zgq.actionbartest.consumption.Consumption;
 import com.example.zgq.actionbartest.consumption.DayConsumption;
 import com.example.zgq.actionbartest.consumption.SingleConsumption;
 
 import java.util.ArrayList;
 
-
-public class SwipeAdapter extends BaseAdapter {
-    /**
-     * 上下文对象
-     */
-    private Context mContext = null;
-
+/**
+ * Created by 37902 on 2015/12/13.
+ */
+public class RefreshAdapter extends BaseAdapter{
+    private Context mContext;
     private ArrayList<Consumption> arrayList;
-    /**
-     *
-     */
-    private int mRightWidth = 0;
 
 
-    /**
-     * 单击事件监听器
-     */
-    private IOnItemRightClickListener mListener = null;
-
-
-    public interface IOnItemRightClickListener {
-        void onRightClick(View v, int position);
-    }
-
-
-    /**
-//     * @param mainActivity
-     */
-    public SwipeAdapter(Context ctx, int rightWidth, ArrayList<Consumption> arrayList) {
-        mContext = ctx;
-        mRightWidth = rightWidth;
+    public RefreshAdapter(Context context, ArrayList<Consumption> arrayList) {
+        super();
         this.arrayList = arrayList;
+        this.mContext = context;
     }
-
 
     @Override
     public int getCount() {
         return arrayList.size();
     }
-
-
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-
     @Override
     public long getItemId(int position) {
         return position;
+    }
+    @Override
+    public Object getItem(int position) {
+        return null;
     }
 
 
@@ -88,14 +58,12 @@ public class SwipeAdapter extends BaseAdapter {
                 itemDay = new ViewDayHolder();
                 itemDay.dayTotal = (TextView) convertView.findViewById(R.id.day_total);
                 itemDay.dayDate = (TextView) convertView.findViewById(R.id.day_date);
-//                itemDay.dayRight = (TextView) convertView.findViewById(R.id.day_item_right_txt);
                 convertView.setTag(itemDay);
             }else{
                 itemDay = (ViewDayHolder) convertView.getTag();
             }
             itemDay.dayTotal.setText("" + dayConsumption.getDayTotal());
             itemDay.dayDate.setText(dayConsumption.getDayDate().substring(4,8));
-//            itemDay.dayRight.setText("delete");
             return convertView;
 
         }else{
@@ -104,24 +72,24 @@ public class SwipeAdapter extends BaseAdapter {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.item, parent, false);
                 itemSingle = new ViewSingleHolder();
                 itemSingle.item_left = (View) convertView.findViewById(R.id.item_left);
-                itemSingle.item_right = (View) convertView.findViewById(R.id.item_right);
+//                itemSingle.item_right = (View) convertView.findViewById(R.id.item_right);
                 itemSingle.item_left_price = (TextView) convertView.findViewById(R.id.item_left_price);
                 itemSingle.item_left_label = (TextView) convertView.findViewById(R.id.item_left_lable);
                 itemSingle.item_left_date = (TextView) convertView.findViewById(R.id.item_left_date);
-                itemSingle.item_right_txt = (TextView) convertView.findViewById(R.id.item_right_txt);
+//                itemSingle.item_right_txt = (TextView) convertView.findViewById(R.id.item_right_txt);
                 convertView.setTag(itemSingle);
             } else {// 有直接获得ViewHolder
                 itemSingle = (ViewSingleHolder) convertView.getTag();
             }
-            LinearLayout.LayoutParams lp1 = new LayoutParams(LayoutParams.MATCH_PARENT,
-                    LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT);
             itemSingle.item_left.setLayoutParams(lp1);
-            LinearLayout.LayoutParams lp2 = new LayoutParams(mRightWidth, LayoutParams.MATCH_PARENT);
-            itemSingle.item_right.setLayoutParams(lp2);
+//            LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(30, LinearLayout.LayoutParams.MATCH_PARENT);
+//            itemSingle.item_right.setLayoutParams(lp2);
             itemSingle.item_left_price.setText(""+single.getPrice());
             itemSingle.item_left_label.setText(single.getLable());
             itemSingle.item_left_date.setText(single.getDate().substring(8,13));
-            itemSingle.item_right_txt.setText("delete");
+//            itemSingle.item_right_txt.setText("delete");
 //            itemSingle.item_left.setOnClickListener(new OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -135,8 +103,6 @@ public class SwipeAdapter extends BaseAdapter {
             return convertView;
         }
     }
-
-
     private class ViewSingleHolder {
         View item_left;
 
@@ -155,6 +121,5 @@ public class SwipeAdapter extends BaseAdapter {
     private class ViewDayHolder {
         TextView dayTotal;
         TextView dayDate;
-//        TextView dayRight;
     }
 }

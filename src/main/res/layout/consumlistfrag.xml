@@ -2,12 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.example.zgq.actionbartest.myview.SwipeListView
-        android:id="@+id/swipe_listview"
+    <com.example.zgq.actionbartest.myview.RefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="0.5dp"
-        android:divider="@drawable/list_item_divider"
-         />
+        tools:context=".MainActivity">
 
+        <com.example.zgq.actionbartest.myview.SwipeListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:dividerHeight="1px"
+            android:footerDividersEnabled="false"
+            tools:listitem="@layout/list_item" />
+    </com.example.zgq.actionbartest.myview.RefreshLayout>
 </LinearLayout>

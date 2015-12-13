@@ -23,6 +23,11 @@ public class HomeTopFrag extends Fragment implements View.OnClickListener{
     private ImageButton prevMonth;
     private ImageButton nextMonth;
     private TextView year_month;
+    private TextView happiness;
+    private TextView monthOut;
+    private TextView monthOutNumber;
+    private TextView monthIn;
+    private TextView monthInNumber;
 //    private String[] year ={"13年","14年","15年","16年","17年","18年","19年","20年","21年","22年","23年","24年","25年","26年","27年","28年","29年","30年","31年","33年","34年","35年","36年","37年","38年","39年","40年","41年","42年","43年","44年","45年","46年","47年","48年","49年","50年"};
 //    private int[] year;
     private int year;
@@ -105,12 +110,18 @@ public class HomeTopFrag extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_top,container,false);
-        count = (ImageButton) view.findViewById(R.id.count);
         prevMonth = (ImageButton) view.findViewById(R.id.previous);
         nextMonth = (ImageButton) view.findViewById(R.id.next);
         year_month = (TextView) view.findViewById(R.id.year_month);
-        String date = DataOperate.singleConsumptions.get(0).getDate().substring(0, 6);
-        year_month.setText("  "+date.substring(2, 4) + "年 " + date.substring(4, 6) + "月"+"  ");
+        happiness = (TextView) view.findViewById(R.id.month_happy_text);
+//        monthOut = (TextView) view.findViewById(R.id.month_out);
+//        monthOutNumber = (TextView) view.findViewById(R.id.month_out_number);
+//        monthIn = (TextView) view.findViewById(R.id.month_in);
+//        monthInNumber = (TextView) view.findViewById(R.id.month_in_number);
+
+//        String date = DataOperate.singleConsumptions.get(0).getDate().substring(0, 6);
+//        year_month.setText("  "+date.substring(2, 4) + "年 " + date.substring(4, 6) + "月"+"  ");
+
         prevMonth.setOnClickListener(this);
         nextMonth.setOnClickListener(this);
         return view;
