@@ -3,6 +3,7 @@ package com.example.zgq.actionbartest.myview;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.ListView;
@@ -24,7 +25,8 @@ public class RefreshLayout extends SwipeRefreshLayout {
 
     public RefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+//        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        mTouchSlop = 16;
     }
 
     //set the child view of RefreshLayout,ListView
@@ -33,34 +35,41 @@ public class RefreshLayout extends SwipeRefreshLayout {
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
+    public boolean onInterceptTouchEvent(MotionEvent event) {
         final int action = event.getAction();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                firstTouchY = event.getRawY();
-                break;
+        if (isBottom() && !isLoading) {
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    firstTouchY = event.getRawY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
 
-            case MotionEvent.ACTION_UP:
-                lastTouchY = event.getRawY();
-                if (canLoadMore()) {
-                    loadData();
-                }
-                break;
-            default:
-                break;
+                    Log.d("-", "1");
+                case MotionEvent.ACTION_UP:
+                    lastTouchY = event.getRawY();
+                    if (canLoadMore()) {
+                        loadData();
+                        Log.d("--", "2");
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
-
-        return super.dispatchTouchEvent(event);
+        return super.onInterceptTouchEvent(event);
     }
 
     private boolean canLoadMore() {
+        Log.d("---","3");
         return isBottom() && !isLoading && isPullingUp();
     }
 
     private boolean isBottom() {
         if (mListView.getCount() > 0) {
-            if (mListView.getLastVisiblePosition() == mListView.getAdapter().getCount() - 1 &&
+            Log.d("----","4");
+            if (mListView.getLastVisiblePosition() == mListView.getAdapter().getCount() -1 &&
                     mListView.getChildAt(mListView.getChildCount() - 1).getBottom() <= mListView.getHeight()) {
+                Log.d("-------","7");
                 return true;
             }
         }
@@ -68,11 +77,13 @@ public class RefreshLayout extends SwipeRefreshLayout {
     }
 
     private boolean isPullingUp() {
+        Log.d("-----","5");
         return (firstTouchY - lastTouchY) >= mTouchSlop;
     }
 
     private void loadData() {
         if (mOnLoadListener != null) {
+            Log.d("------","6");
             setLoading(true);
         }
     }
@@ -85,11 +96,13 @@ public class RefreshLayout extends SwipeRefreshLayout {
                 setRefreshing(false);
             }
             mListView.setSelection(mListView.getAdapter().getCount() - 1);
+//            mListView.setSelection(0);
             mOnLoadListener.onLoad();
         } else {
             firstTouchY = 0;
             lastTouchY = 0;
         }
+        isLoading = false;
     }
 
     public void setOnLoadListener(OnLoadListener loadListener) {

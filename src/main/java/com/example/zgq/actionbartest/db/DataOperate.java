@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.zgq.actionbartest.consumption.Consumption;
 import com.example.zgq.actionbartest.consumption.DayConsumption;
+import com.example.zgq.actionbartest.consumption.MonthConsumption;
 import com.example.zgq.actionbartest.util.CreateDir;
 import com.example.zgq.actionbartest.util.DateTools;
 import com.example.zgq.actionbartest.consumption.SingleConsumption;
@@ -30,10 +31,14 @@ public class DataOperate extends Observable{
 
     public static String currentTable = "c"+DateTools.getDate(true);
 
-    public static ArrayList<Consumption> monthConsumptions = new ArrayList<>();
-    public static ArrayList<SingleConsumption> singleConsumptions = new ArrayList<>();
+//    public static ArrayList<Consumption> monthConsumptions = new ArrayList<>();
+//    public static ArrayList<SingleConsumption> singleConsumptions = new ArrayList<>();
     //    构造方法
     //    获取DataOperate实例
+    public static MonthConsumption selectedMonth;
+//    public static MonthConsumption previousMonth;
+//    public static MonthConsumption bufferMonth;
+
     public synchronized static DataOperate getInstance(Context context) {
         if (dataOperate == null) {
             dataOperate = new DataOperate(context);
@@ -45,11 +50,9 @@ public class DataOperate extends Observable{
         db = dbHelper.getWritableDatabase();
         if (!isExits(currentTable)) {
             dbHelper.creatTable(currentTable, db);
-            Log.d("---------", "succeed");
         }
         if (!isExits("c201511")) {
             dbHelper.creatTable("c201511", db);
-            Log.d("---------", "succeed");
         }
     }
     public static boolean isExits(String table){
@@ -63,6 +66,45 @@ public class DataOperate extends Observable{
         return exits;
     }
 
+    public static MonthConsumption getMonthConsum(String tableName){
+        ArrayList<SingleConsumption> singleConsumptions = getSingleConsumptions(tableName);
+        ArrayList<Consumption> consumptions =  getConsumptions(singleConsumptions);
+        ArrayList<DayConsumption> dayConsumptions = new ArrayList<>();
+        int happiness = 0;
+        double monthConsum = 0;
+        for (Consumption c: consumptions){
+            if (c.isSingleCon()){
+                SingleConsumption s = (SingleConsumption)c;
+                happiness += s.getHappines();
+                monthConsum += s.getPrice();
+            }
+            if (!c.isSingleCon()){
+                dayConsumptions.add((DayConsumption)c);
+            }
+        }
+        happiness /= singleConsumptions.size();
+        return new MonthConsumption(singleConsumptions,dayConsumptions,consumptions,monthConsum,0,happiness);
+    }
+
+    public static MonthConsumption updateMonthConsum(MonthConsumption monthConsumption){
+        ArrayList<SingleConsumption> singleConsumptions = monthConsumption.getSingleConsumptions();
+        ArrayList<Consumption> consumptions = getConsumptions(singleConsumptions);
+        ArrayList<DayConsumption> dayConsumptions = new ArrayList<>();
+        int happiness = 0;
+        double monthConsum = 0;
+        for (Consumption c: consumptions){
+            if (c.isSingleCon()){
+                SingleConsumption s = (SingleConsumption)c;
+                happiness += s.getHappines();
+                monthConsum += s.getPrice();
+            }
+            if (!c.isSingleCon()){
+                dayConsumptions.add((DayConsumption)c);
+            }
+        }
+        happiness /= singleConsumptions.size();
+        return new MonthConsumption(singleConsumptions,dayConsumptions,consumptions,monthConsum,0,happiness);
+    }
 
 //保存数据到数据库
     public static void saveGoods(SingleConsumption singleConsumption) {
@@ -74,31 +116,41 @@ public class DataOperate extends Observable{
             values.put("date", singleConsumption.getDate());
             values.put("happiness", singleConsumption.getHappines());
             values.put("imageId", singleConsumption.getImageId());
-            db.insert("c"+singleConsumption.getDate().substring(0,6), null, values);
+            db.insert("c" + singleConsumption.getDate().substring(0, 6), null, values);
         }
     }
 
+    public static void deleteSingle(SingleConsumption singleConsumption){
+        if (singleConsumption != null){
+            db.delete("c"+singleConsumption.getDate().substring(0,6),"date=?",new String[]{singleConsumption.getDate()});
+        }
+        selectedMonth.getSingleConsumptions().remove(selectedMonth.getSingleConsumptions().indexOf(singleConsumption));
+//        singleConsumptions.remove(singleConsumptions.indexOf(singleConsumption));
+        selectedMonth.setConsumptions(getConsumptions(selectedMonth.getSingleConsumptions()));
+    }
 
     public static void changeData(String tableName){
-        setSingleConsumptions(tableName);
-        setDayConsumptions();
+        selectedMonth = getMonthConsum(tableName);
+//        setSingleConsumptions(tableName);
+//        setDayConsumptions();
     }
     public static void setSingleConsumptions(String tableName) {
-        String[] date = {"2015110108:0102","2015110109:0102","2015110110:0102","2015110111:0102","2015110112:0102","2015110113:0102","2015110114:0102","2015110115:0102","2015110116:0102","2015110117:0102",
-                "2015110207:0102","2015110208:0102","2015110209:0102","2015110210:0102","2015110211:0102","2015110212:0102","2015110213:0102","2015110214:0102","2015110215:0102","2015110216:0102","2015110217:0102",
-                "2015110307:0102","2015110308:0102","2015110309:0102","2015110310:0102","2015110311:0102","2015110312:0102","2015110313:0102","2015110314:0102","2015110315:0102","2015110316:0102","2015110317:0102",
-                "2015110407:0102","2015110408:0102","2015110409:0102","2015110410:0102","2015110411:0102","2015110412:0102","2015110413:0102","2015110414:0102","2015110415:0102","2015110416:0102","2015110417:0102",
-                "2015120107:0102","2015120108:0102","2015120109:0102","2015120110:0102","2015120111:0102","2015120112:0102","2015120113:0102","2015120114:0102","2015120115:0102","2015120116:0102","2015120117:0102",
-                "2015120207:0102","2015120208:0102","2015120209:0102","2015120210:0102","2015120211:0102","2015120212:0102","2015120213:0102","2015120214:0102","2015120215:0102","2015120216:0102","2015120217:0102",
-                "2015120307:0102","2015120308:0102","2015120309:0102","2015120310:0102","2015120311:0102","2015120312:0102","2015120313:0102","2015120314:0102","2015120315:0102","2015120316:0102","2015120317:0102",
-                "2015120407:0102","2015120408:0102","2015120409:0102","2015120410:0102","2015120411:0102","2015120412:0102","2015120413:0102","2015120414:0102","2015120415:0102","2015120416:0102","2015120417:0102",
-                };
+//        String[] date = {"2015110108:0102","2015110109:0102","2015110110:0102","2015110111:0102","2015110112:0102","2015110113:0102","2015110114:0102","2015110115:0102","2015110116:0102","2015110117:0102",
+//                "2015110207:0102","2015110208:0102","2015110209:0102","2015110210:0102","2015110211:0102","2015110212:0102","2015110213:0102","2015110214:0102","2015110215:0102","2015110216:0102","2015110217:0102",
+//                "2015110307:0102","2015110308:0102","2015110309:0102","2015110310:0102","2015110311:0102","2015110312:0102","2015110313:0102","2015110314:0102","2015110315:0102","2015110316:0102","2015110317:0102",
+//                "2015110407:0102","2015110408:0102","2015110409:0102","2015110410:0102","2015110411:0102","2015110412:0102","2015110413:0102","2015110414:0102","2015110415:0102","2015110416:0102","2015110417:0102",
+//                "2015120107:0102","2015120108:0102","2015120109:0102","2015120110:0102","2015120111:0102","2015120112:0102","2015120113:0102","2015120114:0102","2015120115:0102","2015120116:0102","2015120117:0102",
+//                "2015120207:0102","2015120208:0102","2015120209:0102","2015120210:0102","2015120211:0102","2015120212:0102","2015120213:0102","2015120214:0102","2015120215:0102","2015120216:0102","2015120217:0102",
+//                "2015120307:0102","2015120308:0102","2015120309:0102","2015120310:0102","2015120311:0102","2015120312:0102","2015120313:0102","2015120314:0102","2015120315:0102","2015120316:0102","2015120317:0102",
+//                "2015120407:0102","2015120408:0102","2015120409:0102","2015120410:0102","2015120411:0102","2015120412:0102","2015120413:0102","2015120414:0102","2015120415:0102","2015120416:0102","2015120417:0102",
+//                };
 //        ArrayList<SingleConsumption> month = new ArrayList<>();
 //        for (int i = 0; i<date.length; i++) {
 //            SingleConsumption singleConsumption = new SingleConsumption(i, "cloth", date[i], 5, null, null);
 //            saveGoods(singleConsumption);
 //        }
-        singleConsumptions = getSingleConsumptions(tableName);
+
+//        singleConsumptions = getSingleConsumptions(tableName);
     }
     public static ArrayList<SingleConsumption> getSingleConsumptions(String tableName){
         ArrayList<SingleConsumption> singleConsumptions = new ArrayList<SingleConsumption>();
@@ -119,12 +171,12 @@ public class DataOperate extends Observable{
     }
 
 
-    public static void setDayConsumptions(){
-        monthConsumptions = getDayConsumptions(singleConsumptions);
-    }
+//    public static void setDayConsumptions(){
+//        monthConsumptions = getDayConsumptions(singleConsumptions);
+//    }
 
 
-    public static ArrayList<Consumption> getDayConsumptions(ArrayList<SingleConsumption> arrayList) {
+    public static ArrayList<Consumption> getConsumptions(ArrayList<SingleConsumption> arrayList) {
         ArrayList<SingleConsumption> partSingles = new ArrayList<>();
         ArrayList<Consumption> dayConsumptions = new ArrayList<>();
         String tmp = "0000";
@@ -142,7 +194,7 @@ public class DataOperate extends Observable{
                 }
                 try {
                     String date = partSingles.get(0).getDate();
-                    DayConsumption dayConsumption = new DayConsumption(total, date);
+                    DayConsumption dayConsumption = new DayConsumption(total,date,partSingles);
                     dayConsumptions.add(dayConsumption);
                     for (SingleConsumption partSingle : partSingles) {
                         dayConsumptions.add(partSingle);
@@ -160,25 +212,29 @@ public class DataOperate extends Observable{
         return dayConsumptions;
     }
     public static boolean addSingleCon(SingleConsumption single){
-        singleConsumptions.add(single);
-        setDayConsumptions();
+        selectedMonth.getSingleConsumptions().add(single);
+        selectedMonth = updateMonthConsum(selectedMonth);
+//        setConsumptions();
         return true;
     }
-    public static SingleConsumption setSingleCon(SingleConsumption oldSingle,SingleConsumption newSingle){
-        setDayConsumptions();
-        return singleConsumptions.set(singleConsumptions.indexOf(oldSingle), newSingle);
+    public static void setSingleCon(SingleConsumption oldSingle,SingleConsumption newSingle){
+//        setConsumptions();
+        selectedMonth.getSingleConsumptions().set(selectedMonth.getSingleConsumptions().indexOf(oldSingle), newSingle);
+        selectedMonth = updateMonthConsum(selectedMonth);
+//        return singleConsumptions.set(singleConsumptions.indexOf(oldSingle), newSingle);
     }
     public static void initialData(Context context){
         getInstance(context);
         CreateDir.createDir();
-        setSingleConsumptions("c"+DateTools.getDate(true));
-        setDayConsumptions();
+        selectedMonth = getMonthConsum("c"+DateTools.getDate(true));
+//        setSingleConsumptions("c"+DateTools.getDate(true));
+//        setConsumptions();
     }
 
     public static void changeSingle(SingleConsumption older,SingleConsumption newer){
-        if (singleConsumptions.contains(older)){
-            singleConsumptions.set(singleConsumptions.indexOf(older), newer);
-            setDayConsumptions();
+        if (selectedMonth.getSingleConsumptions().contains(older)) {
+            selectedMonth.getSingleConsumptions().set(selectedMonth.getSingleConsumptions().indexOf(older), newer);
+            selectedMonth = updateMonthConsum(selectedMonth);
             updateSingleData(getSingleInData(older),newer);
         }
     }

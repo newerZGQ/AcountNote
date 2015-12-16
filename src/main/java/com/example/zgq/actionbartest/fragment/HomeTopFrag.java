@@ -52,68 +52,68 @@ public class HomeTopFrag extends Fragment implements View.OnClickListener{
     }
     @Override
     public void onClick(View v) {
-        String sMonth;
-        switch (v.getId()){
-            case R.id.previous:
-                month = month- 1;
-                if (month == 0){
-                    month = 12;
-                    year -=1;
-                }
-                sMonth=""+month;
-                try {
-                    if (isSingleNum(month)) {
-                        sMonth = "0" + month;
-                    }
-                    DataOperate.changeData("c20" + year + sMonth);
-                    getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentList).onResume();
-                }catch (Exception e){
-                    month +=1;
-                    if (month == 13){
-                        month =1;
-                        year +=1;
-                    }
-                    Toast.makeText(getActivity(), "别点了，没有记录了", Toast.LENGTH_SHORT).show();
-                }
-                onResume();
-                Log.d("---",""+month);
-                break;
-            case R.id.next:
-                month +=1;
-                if (month == 13){
-                    month =1;
-                    year +=1;
-                }
-                sMonth = ""+month;
-                try {
-                    if (isSingleNum(month))
-                        sMonth = "0"+month;
-                    DataOperate.changeData("c20" + year + sMonth);
-                    getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentList).onResume();
-                }catch (Exception e){
-                    month -=1;
-                    if (month == 0){
-                        month = 12;
-                        year -=1;
-                    }
-                    Toast.makeText(getActivity(), "别点了，没有记录了", Toast.LENGTH_SHORT).show();
-                }
-                onResume();
-                break;
-            case R.id.year_month:
-
-                break;
-        }
+//        String sMonth;
+//        switch (v.getId()){
+//            case R.id.previous:
+//                month = month- 1;
+//                if (month == 0){
+//                    month = 12;
+//                    year -=1;
+//                }
+//                sMonth=""+month;
+//                try {
+//                    if (isSingleNum(month)) {
+//                        sMonth = "0" + month;
+//                    }
+//                    DataOperate.changeData("c20" + year + sMonth);
+//                    getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentList).onResume();
+//                }catch (Exception e){
+//                    month +=1;
+//                    if (month == 13){
+//                        month =1;
+//                        year +=1;
+//                    }
+//                    Toast.makeText(getActivity(), "别点了，没有记录了", Toast.LENGTH_SHORT).show();
+//                }
+//                onResume();
+//                Log.d("---",""+month);
+//                break;
+//            case R.id.next:
+//                month +=1;
+//                if (month == 13){
+//                    month =1;
+//                    year +=1;
+//                }
+//                sMonth = ""+month;
+//                try {
+//                    if (isSingleNum(month))
+//                        sMonth = "0"+month;
+//                    DataOperate.changeData("c20" + year + sMonth);
+//                    getActivity().getSupportFragmentManager().findFragmentById(R.id.fragmentList).onResume();
+//                }catch (Exception e){
+//                    month -=1;
+//                    if (month == 0){
+//                        month = 12;
+//                        year -=1;
+//                    }
+//                    Toast.makeText(getActivity(), "别点了，没有记录了", Toast.LENGTH_SHORT).show();
+//                }
+//                onResume();
+//                break;
+//            case R.id.year_month:
+//
+//                break;
+//        }
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.home_top,container,false);
-        prevMonth = (ImageButton) view.findViewById(R.id.previous);
-        nextMonth = (ImageButton) view.findViewById(R.id.next);
-        year_month = (TextView) view.findViewById(R.id.year_month);
-        happiness = (TextView) view.findViewById(R.id.month_happy_text);
+        View view = inflater.inflate(R.layout.home_bottom,container,false);
+//        prevMonth = (ImageButton) view.findViewById(R.id.previous);
+//        nextMonth = (ImageButton) view.findViewById(R.id.next);
+//        year_month = (TextView) view.findViewById(R.id.year_month);
+//        happiness = (TextView) view.findViewById(R.id.month_happy_text);
 //        monthOut = (TextView) view.findViewById(R.id.month_out);
 //        monthOutNumber = (TextView) view.findViewById(R.id.month_out_number);
 //        monthIn = (TextView) view.findViewById(R.id.month_in);
@@ -122,8 +122,8 @@ public class HomeTopFrag extends Fragment implements View.OnClickListener{
 //        String date = DataOperate.singleConsumptions.get(0).getDate().substring(0, 6);
 //        year_month.setText("  "+date.substring(2, 4) + "年 " + date.substring(4, 6) + "月"+"  ");
 
-        prevMonth.setOnClickListener(this);
-        nextMonth.setOnClickListener(this);
+//        prevMonth.setOnClickListener(this);
+//        nextMonth.setOnClickListener(this);
         return view;
     }
 

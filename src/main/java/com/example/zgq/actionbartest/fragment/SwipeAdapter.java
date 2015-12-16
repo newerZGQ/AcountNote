@@ -28,7 +28,7 @@ public class SwipeAdapter extends BaseAdapter {
      */
     private Context mContext = null;
 
-    private ArrayList<Consumption> arrayList;
+    public ArrayList<Consumption> arrayList;
     /**
      *
      */
@@ -49,10 +49,11 @@ public class SwipeAdapter extends BaseAdapter {
     /**
 //     * @param mainActivity
      */
-    public SwipeAdapter(Context ctx, int rightWidth, ArrayList<Consumption> arrayList) {
+    public SwipeAdapter(Context ctx, int rightWidth, ArrayList<Consumption> arrayList,IOnItemRightClickListener mListener) {
         mContext = ctx;
         mRightWidth = rightWidth;
         this.arrayList = arrayList;
+        this.mListener = mListener;
     }
 
 
@@ -118,10 +119,18 @@ public class SwipeAdapter extends BaseAdapter {
             itemSingle.item_left.setLayoutParams(lp1);
             LinearLayout.LayoutParams lp2 = new LayoutParams(mRightWidth, LayoutParams.MATCH_PARENT);
             itemSingle.item_right.setLayoutParams(lp2);
-            itemSingle.item_left_price.setText(""+single.getPrice());
+            itemSingle.item_left_price.setText("" + single.getPrice());
             itemSingle.item_left_label.setText(single.getLable());
-            itemSingle.item_left_date.setText(single.getDate().substring(8,13));
+            itemSingle.item_left_date.setText(single.getDate().substring(8, 13));
             itemSingle.item_right_txt.setText("delete");
+            itemSingle.item_right.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onRightClick(v, thisPosition);
+                    }
+                }
+            });
 //            itemSingle.item_left.setOnClickListener(new OnClickListener() {
 //                @Override
 //                public void onClick(View v) {

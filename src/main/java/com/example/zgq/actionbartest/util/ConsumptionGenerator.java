@@ -28,39 +28,39 @@ public class ConsumptionGenerator {
         }
         singleConsumptions = month;
     }
-    public static void setDayConsumptions(){
-        monthConsumptions = setDayConsumptions(singleConsumptions);
-    }
-    public static ArrayList<Consumption> setDayConsumptions(ArrayList<SingleConsumption> arrayList) {
-        ArrayList<SingleConsumption> partSingles = new ArrayList<>();
-        ArrayList<Consumption> dayConsumptions = new ArrayList<>();
-        String tmp = "0000";
-        SingleConsumption single;
-        for (int i = 0; i < arrayList.size() + 1; i++) {
-            if (i >= arrayList.size()) {
-                single = null;
-            } else {
-                single = arrayList.get(i);
-            }
-            if (i >= arrayList.size() || (!partSingles.isEmpty() && !(tmp.substring(0, 2).equals(single.getDate().substring(0, 2))))) {
-                double total = 0;
-                for (SingleConsumption partSingle : partSingles) {
-                    total += partSingle.getPrice();
-                }
-                String date = partSingles.get(0).getDate();
-                DayConsumption dayConsumption = new DayConsumption(total, date);
-                dayConsumptions.add(dayConsumption);
-                for (SingleConsumption partSingle : partSingles) {
-                    dayConsumptions.add(partSingle);
-
-                }
-                partSingles.clear();
-            }
-            if (i < arrayList.size()) {
-                partSingles.add(single);
-                tmp = single.getDate();
-            }
-        }
-        return dayConsumptions;
-    }
+//    public static void setDayConsumptions(){
+//        monthConsumptions = setDayConsumptions(singleConsumptions);
+//    }
+//    public static ArrayList<Consumption> setDayConsumptions(ArrayList<SingleConsumption> arrayList) {
+//        ArrayList<SingleConsumption> partSingles = new ArrayList<>();
+//        ArrayList<Consumption> dayConsumptions = new ArrayList<>();
+//        String tmp = "0000";
+//        SingleConsumption single;
+//        for (int i = 0; i < arrayList.size() + 1; i++) {
+//            if (i >= arrayList.size()) {
+//                single = null;
+//            } else {
+//                single = arrayList.get(i);
+//            }
+//            if (i >= arrayList.size() || (!partSingles.isEmpty() && !(tmp.substring(0, 2).equals(single.getDate().substring(0, 2))))) {
+//                double total = 0;
+//                for (SingleConsumption partSingle : partSingles) {
+//                    total += partSingle.getPrice();
+//                }
+//                String date = partSingles.get(0).getDate();
+//                DayConsumption dayConsumption = new DayConsumption(total, date);
+//                dayConsumptions.add(dayConsumption);
+//                for (SingleConsumption partSingle : partSingles) {
+//                    dayConsumptions.add(partSingle);
+//
+//                }
+//                partSingles.clear();
+//            }
+//            if (i < arrayList.size()) {
+//                partSingles.add(single);
+//                tmp = single.getDate();
+//            }
+//        }
+//        return dayConsumptions;
+//    }
 }

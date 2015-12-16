@@ -10,10 +10,12 @@ public class DayConsumption extends Consumption implements Serializable {
     public static boolean isSingleCon = false;
     private double dayTotal;
     private String dayDate;
-    public DayConsumption(double dayTotal,String dayDate){
+    private ArrayList<SingleConsumption> singleConsumptions;
+    public DayConsumption(double dayTotal,String dayDate,ArrayList<SingleConsumption> singleConsumptions){
         super();
         this.dayTotal = dayTotal;
         this.dayDate = dayDate;
+        this.singleConsumptions = singleConsumptions;
     }
     public double getDayTotal(){
         return dayTotal;
@@ -21,14 +23,9 @@ public class DayConsumption extends Consumption implements Serializable {
     public String getDayDate(){
         return dayDate;
     }
-//    public double getDayConsumption(ArrayList<SingleConsumption> arrayList){
-//        double dayConsumption = 0;
-//        for (SingleConsumption s : arrayList){
-//            dayConsumption += s.getPrice();
-//        }
-//        return dayConsumption;
-//    }
-
+    public ArrayList<SingleConsumption> getSingleConsumptions(){
+        return singleConsumptions;
+    }
     @Override
     public boolean isSingleCon() {
         return false;

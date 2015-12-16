@@ -33,13 +33,12 @@ public class GoodsShow extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        singleConsumptions = DataOperate.singleConsumptions;
+        singleConsumptions = DataOperate.selectedMonth.getSingleConsumptions();
         fragmentList = new ArrayList<>();
         for (SingleConsumption single:singleConsumptions){
             GoodsShowFragment fragment = GoodsShowFragment.newInstance(single);

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -30,7 +31,7 @@ public class HomePageActivity extends FragmentActivity {
 
     private Fragment fragmentBottom;
 
-    private Fragment fragmentTop;
+    private android.support.v7.widget.Toolbar toolbar;
 
     FragmentManager fragmentManager;
 
@@ -99,8 +100,9 @@ public class HomePageActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.homepage);
+        toolbar = (Toolbar) findViewById(R.id.hometoolbar);
 
         fragmentManager = getSupportFragmentManager();
         fragmentList = fragmentManager.findFragmentById(R.id.fragmentList);
@@ -120,6 +122,8 @@ public class HomePageActivity extends FragmentActivity {
 //        }
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -129,7 +133,7 @@ public class HomePageActivity extends FragmentActivity {
                     .add(R.id.fragmentList, fragmentList)
                     .commit();
         }else{
-            getSupportFragmentManager().findFragmentById(R.id.fragmentList).onResume();
+            getSupportFragmentManager().findFragmentById(R.id.fragmentList).onStart();
         }
 //        getFragmentManager().findFragmentById(R.id.fragmentTop).onResume();
     }

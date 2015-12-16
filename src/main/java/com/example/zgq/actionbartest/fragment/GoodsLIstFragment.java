@@ -34,7 +34,7 @@ public class GoodsListFragment extends ListFragment{
     @Override
     public void onResume() {
         super.onResume();
-        monthConsumptions = DataOperate.monthConsumptions;
+        monthConsumptions = DataOperate.selectedMonth.getConsumptions();
         ConsumptionListAdapter consumptionListAdapter = new ConsumptionListAdapter(monthConsumptions);
         setListAdapter(consumptionListAdapter);
         getListView().requestFocus();
