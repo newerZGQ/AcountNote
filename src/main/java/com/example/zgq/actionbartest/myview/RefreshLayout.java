@@ -26,7 +26,7 @@ public class RefreshLayout extends SwipeRefreshLayout {
     public RefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
 //        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        mTouchSlop = 16;
+        mTouchSlop = 10;
     }
 
     //set the child view of RefreshLayout,ListView
@@ -45,15 +45,17 @@ public class RefreshLayout extends SwipeRefreshLayout {
                 case MotionEvent.ACTION_MOVE:
 
                     Log.d("-", "1");
+                    break;
                 case MotionEvent.ACTION_UP:
                     lastTouchY = event.getRawY();
                     if (canLoadMore()) {
                         loadData();
                         Log.d("--", "2");
                     }
+//                    return true;
                     break;
-                default:
-                    break;
+//                default:
+//                    break;
             }
         }
         return super.onInterceptTouchEvent(event);
@@ -61,11 +63,11 @@ public class RefreshLayout extends SwipeRefreshLayout {
 
     private boolean canLoadMore() {
         Log.d("---","3");
-        return isBottom() && !isLoading && isPullingUp();
+        return isPullingUp();
     }
 
     private boolean isBottom() {
-        if (mListView.getCount() > 0) {
+        if (mListView.getCount() > 0 || mListView.getCount() == 0) {
             Log.d("----","4");
             if (mListView.getLastVisiblePosition() == mListView.getAdapter().getCount() -1 &&
                     mListView.getChildAt(mListView.getChildCount() - 1).getBottom() <= mListView.getHeight()) {

@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
-    android:background="@drawable/background">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_goods_edit"
-        android:layout_width="fill_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:popupTheme="@style/AppTheme"/>
+    android:weightSum="1">
 
     <ImageView
         android:id="@+id/goods_picture"
@@ -21,7 +12,6 @@
         android:layout_height="150dp"
         android:contentDescription="@string/save"
         android:scaleType="centerInside"
-        android:layout_below="@+id/toolbar_goods_edit"
         android:layout_alignParentStart="true" />
 
     <EditText
@@ -53,5 +43,9 @@
         android:hint="@string/please_input_detail"
         android:layout_below="@+id/include2"
         android:layout_alignParentStart="true" />
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

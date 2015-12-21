@@ -5,6 +5,7 @@
     <string name="food_item">食</string>
     <string name="living_item">住</string>
     <string name="traffic_item">行</string>
+    <string name="date">时间</string>
 
     <string name="home_button">HomeButton</string>
     <string name="take_photo">TakePhoto</string>
@@ -12,7 +13,7 @@
     <string name="save">确定</string>
     <string name="edit">编辑</string>
 
-    <string name="please_input_ptice">"     00.00"</string>
+    <string name="please_input_ptice">"      0"</string>
     <string name="only_number_and_.">1234567890.</string>
     <string name="please_input_happiness">请输入幸福度</string>
     <string name="please_input_lable">请输入标签</string>

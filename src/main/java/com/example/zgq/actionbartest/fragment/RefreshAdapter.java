@@ -89,17 +89,6 @@ public class RefreshAdapter extends BaseAdapter{
             itemSingle.item_left_price.setText(""+single.getPrice());
             itemSingle.item_left_label.setText(single.getLable());
             itemSingle.item_left_date.setText(single.getDate().substring(8,13));
-//            itemSingle.item_right_txt.setText("delete");
-//            itemSingle.item_left.setOnClickListener(new OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(mContext, GoodsShow.class);
-//                    intent.putExtra("singleConsumption", single);
-//                    Log.d("------1", "ssss");
-//                    mContext.startActivity(intent);
-//                    Log.d("------2", "ssss");
-//                }
-//            });
             return convertView;
         }
     }

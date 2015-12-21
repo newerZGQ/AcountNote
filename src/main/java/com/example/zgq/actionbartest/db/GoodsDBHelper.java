@@ -11,7 +11,7 @@ import com.example.zgq.actionbartest.util.DateTools;
  */
 public class GoodsDBHelper extends SQLiteOpenHelper {
 //    public static String tableName = "c"+DateTools.getDate(true);
-    public void creatTable(String tableName,SQLiteDatabase db){
+    public static void creatTable(String tableName,SQLiteDatabase db){
         String CREATE_CONSUMPTION = "create table "+tableName+" ("
                 + "id integer primary key autoincrement, "
                 + "price real, "

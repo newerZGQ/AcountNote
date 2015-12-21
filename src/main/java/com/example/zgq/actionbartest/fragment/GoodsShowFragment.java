@@ -1,21 +1,27 @@
 package com.example.zgq.actionbartest.fragment;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import com.example.zgq.actionbartest.R;
 import com.example.zgq.actionbartest.activity.GoodsEdit;
+import com.example.zgq.actionbartest.db.DataOperate;
 import com.example.zgq.actionbartest.util.BipmapUtil;
 import com.example.zgq.actionbartest.consumption.SingleConsumption;
-import com.example.zgq.actionbartest.util.ConsumptionGenerator;
 import com.example.zgq.actionbartest.util.PathTools;
 
 import java.io.FileInputStream;
@@ -51,9 +57,11 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
     //    detail显示
     private TextView detailShow;
 
-    private Button editButton;
+    private ImageButton editButton;
 
     private Bitmap bitmap;
+
+    private Toolbar toolbar;
 
     public void goodsShow(SingleConsumption singleConsumption){
         pictureShow = (ImageView) view.findViewById(R.id.picture_show);
@@ -65,13 +73,12 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
         happinessImage4 = (ImageView) view.findViewById(R.id.happiness_imageview4);
         happinessImage5 = (ImageView) view.findViewById(R.id.happiness_imageview5);
         detailShow = (TextView) view.findViewById(R.id.detail_show);
-        editButton = (Button) view.findViewById(R.id.edit);
-
+        editButton = (ImageButton) (getActivity().findViewById(R.id.show_edit));
         editButton.setOnClickListener(this);
         priceShow.setText(""+ singleConsumption.getPrice());
         detailShow.setText(singleConsumption.getDetail());
 
-        String fileName = PathTools.getPath()+ "/" + singleConsumption.getImageId();
+        String fileName = PathTools.getPath(singleConsumption.getDate().substring(0,6))+ "/" + singleConsumption.getImageId();
         try {
             fis = new FileInputStream(fileName);
             pictureShow.setImageBitmap(BipmapUtil.ZoomBipmap(fis, 6));
@@ -83,11 +90,12 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
         } finally {
         }
     }
-//    @Override
+    @Override
     public void onClick(View v) {
+        int a = ((ViewPager)getActivity().findViewById(R.id.pager)).getCurrentItem();
         Intent intent = new Intent(getActivity(), GoodsEdit.class);
-        intent.putExtra("singleConsumption", singleConsumption);
-        intent.putExtra("isInitial",false);
+        intent.putExtra("singleConsumption", DataOperate.selectedMonth.getSingleConsumptions().get(a));
+        intent.putExtra("isInitial", false);
         startActivity(intent);
 
     }
@@ -108,7 +116,7 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.goods_fragment,container,false);
+        view = inflater.inflate(R.layout.goodsshowfrag,container,false);
         goodsShow(singleConsumption);
         return  view;
     }
@@ -116,5 +124,6 @@ public class GoodsShowFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
+        ((Toolbar)getActivity().findViewById(R.id.showtoolbar)).setTitle(singleConsumption.getDate().substring(0,8));
     }
 }

@@ -6,7 +6,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/hometoolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/toolbar_height"
         android:background="@color/colorPrimary"/>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,7 +22,7 @@
         android:id="@+id/fragmentBottom"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/bottom_height"
         android:layout_gravity="center_horizontal|top"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true">

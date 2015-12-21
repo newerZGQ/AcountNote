@@ -29,10 +29,9 @@ public class DataOperate extends Observable{
 
     public static SQLiteDatabase db;
 
-    public static String currentTable = "c"+DateTools.getDate(true);
+    public static GoodsDBHelper dbHelper;
 
-//    public static ArrayList<Consumption> monthConsumptions = new ArrayList<>();
-//    public static ArrayList<SingleConsumption> singleConsumptions = new ArrayList<>();
+    public static String currentTable = "c"+DateTools.getDate(true);
     //    构造方法
     //    获取DataOperate实例
     public static MonthConsumption selectedMonth;
@@ -46,14 +45,26 @@ public class DataOperate extends Observable{
         return dataOperate;
     }
     private DataOperate(Context context) {
-        GoodsDBHelper dbHelper = new GoodsDBHelper(context, DB_NAME, null, VERSION);
+        dbHelper = new GoodsDBHelper(context, DB_NAME, null, VERSION);
         db = dbHelper.getWritableDatabase();
         if (!isExits(currentTable)) {
-            dbHelper.creatTable(currentTable, db);
+            creatTable(currentTable, db);
         }
         if (!isExits("c201511")) {
-            dbHelper.creatTable("c201511", db);
+            creatTable("c201511", db);
         }
+    }
+
+    public static void creatTable(String tableName,SQLiteDatabase db){
+        String CREATE_CONSUMPTION = "create table "+tableName+" ("
+                + "id integer primary key autoincrement, "
+                + "price real, "
+                + "lable text, "
+                + "detail text, "
+                + "date text, "
+                + "happiness integer, "
+                + "imageId text)";
+        db.execSQL(CREATE_CONSUMPTION);
     }
     public static boolean isExits(String table){
         boolean exits = false;
@@ -82,7 +93,10 @@ public class DataOperate extends Observable{
                 dayConsumptions.add((DayConsumption)c);
             }
         }
-        happiness /= singleConsumptions.size();
+        if (happiness==0){
+        }else {
+            happiness /= singleConsumptions.size();
+        }
         return new MonthConsumption(singleConsumptions,dayConsumptions,consumptions,monthConsum,0,happiness);
     }
 
@@ -122,11 +136,12 @@ public class DataOperate extends Observable{
 
     public static void deleteSingle(SingleConsumption singleConsumption){
         if (singleConsumption != null){
-            db.delete("c"+singleConsumption.getDate().substring(0,6),"date=?",new String[]{singleConsumption.getDate()});
+            db.delete("c" + singleConsumption.getDate().substring(0, 6), "date=?", new String[]{singleConsumption.getDate()});
         }
         selectedMonth.getSingleConsumptions().remove(selectedMonth.getSingleConsumptions().indexOf(singleConsumption));
 //        singleConsumptions.remove(singleConsumptions.indexOf(singleConsumption));
-        selectedMonth.setConsumptions(getConsumptions(selectedMonth.getSingleConsumptions()));
+//        selectedMonth.setConsumptions(getConsumptions(selectedMonth.getSingleConsumptions()));
+        selectedMonth = updateMonthConsum(selectedMonth);
     }
 
     public static void changeData(String tableName){
@@ -134,7 +149,7 @@ public class DataOperate extends Observable{
 //        setSingleConsumptions(tableName);
 //        setDayConsumptions();
     }
-    public static void setSingleConsumptions(String tableName) {
+    public static void setSingleConsumptions() {
 //        String[] date = {"2015110108:0102","2015110109:0102","2015110110:0102","2015110111:0102","2015110112:0102","2015110113:0102","2015110114:0102","2015110115:0102","2015110116:0102","2015110117:0102",
 //                "2015110207:0102","2015110208:0102","2015110209:0102","2015110210:0102","2015110211:0102","2015110212:0102","2015110213:0102","2015110214:0102","2015110215:0102","2015110216:0102","2015110217:0102",
 //                "2015110307:0102","2015110308:0102","2015110309:0102","2015110310:0102","2015110311:0102","2015110312:0102","2015110313:0102","2015110314:0102","2015110315:0102","2015110316:0102","2015110317:0102",
@@ -171,11 +186,6 @@ public class DataOperate extends Observable{
     }
 
 
-//    public static void setDayConsumptions(){
-//        monthConsumptions = getDayConsumptions(singleConsumptions);
-//    }
-
-
     public static ArrayList<Consumption> getConsumptions(ArrayList<SingleConsumption> arrayList) {
         ArrayList<SingleConsumption> partSingles = new ArrayList<>();
         ArrayList<Consumption> dayConsumptions = new ArrayList<>();
@@ -193,7 +203,8 @@ public class DataOperate extends Observable{
                     total += partSingle.getPrice();
                 }
                 try {
-                    String date = partSingles.get(0).getDate();
+                    String date = partSingles.get(0).getDate().substring(0,8);
+                    Log.d("---",date);
                     DayConsumption dayConsumption = new DayConsumption(total,date,partSingles);
                     dayConsumptions.add(dayConsumption);
                     for (SingleConsumption partSingle : partSingles) {
@@ -218,17 +229,14 @@ public class DataOperate extends Observable{
         return true;
     }
     public static void setSingleCon(SingleConsumption oldSingle,SingleConsumption newSingle){
-//        setConsumptions();
         selectedMonth.getSingleConsumptions().set(selectedMonth.getSingleConsumptions().indexOf(oldSingle), newSingle);
         selectedMonth = updateMonthConsum(selectedMonth);
-//        return singleConsumptions.set(singleConsumptions.indexOf(oldSingle), newSingle);
     }
     public static void initialData(Context context){
         getInstance(context);
         CreateDir.createDir();
-        selectedMonth = getMonthConsum("c"+DateTools.getDate(true));
-//        setSingleConsumptions("c"+DateTools.getDate(true));
-//        setConsumptions();
+        setSingleConsumptions();
+        selectedMonth = getMonthConsum("c" + DateTools.getDate(true));
     }
 
     public static void changeSingle(SingleConsumption older,SingleConsumption newer){
@@ -256,15 +264,22 @@ public class DataOperate extends Observable{
         }
         return myCursor.getInt(0);
     }
-    public static double getCONSUMPTION(String tableName) {
-        double consumption = 0;
-        Cursor myCursor = db.query(tableName, new String[]{"id as _id", "price", "lable", "date", "happiness", "detail", "imageId"}, null, null, null, null, null);
-        if (myCursor.moveToPrevious()) {
-            consumption = Double.parseDouble(myCursor.getString(1));
-            while (myCursor.moveToNext()) {
-                consumption += Double.parseDouble(myCursor.getString(1));
+    public static int findConsumByDate(String date,ArrayList<Consumption> arrayList){
+        if (arrayList.size() > 0) {
+            for (Consumption c : arrayList) {
+                if (!c.isSingleCon()) {
+                    Log.d("----", "000");
+                    DayConsumption d = (DayConsumption)c;
+                    Log.d("----", date);
+                    String s = d.getDayDate();
+                    Log.d("----", s);
+                    Log.d("----", date);
+                    if (s.equals(date)) {
+                        return arrayList.indexOf(d);
+                    }
+                }
             }
         }
-        return consumption;
+        return 0;
     }
 }

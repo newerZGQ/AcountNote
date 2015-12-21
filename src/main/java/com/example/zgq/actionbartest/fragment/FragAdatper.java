@@ -35,6 +35,11 @@ public class FragAdatper extends FragmentStatePagerAdapter {
     }
 
     @Override
+    public int getItemPosition(Object object) {
+        return super.getItemPosition(object);
+    }
+
+    @Override
     public GoodsShowFragment getItem(int position) {
         return fragmentList.get(position);
     }

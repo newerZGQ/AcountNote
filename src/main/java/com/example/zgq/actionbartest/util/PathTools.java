@@ -7,7 +7,7 @@ import android.os.Environment;
  */
 public class PathTools {
 
-    public static String getPath(){
-        return Environment.getExternalStorageDirectory().getAbsolutePath() + "/happybuy/photo/" + DateTools.getDate(DateTools.SIMPLE_TIME);
+    public static String getPath(String date){
+        return Environment.getExternalStorageDirectory().getAbsolutePath() + "/happybuy/photo/" + date;
     }
 }

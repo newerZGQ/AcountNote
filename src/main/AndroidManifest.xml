@@ -8,7 +8,7 @@
         android:icon="@mipmap/homepage"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/android:Theme.Material" >
 
         <activity
             android:name=".activity.MainActivity"
@@ -23,17 +23,18 @@
 
         <activity
             android:name=".activity.HomePageActivity"
-            android:theme="@style/AppTheme.Base"
+            android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask" />
 
         <activity
             android:name=".activity.GoodsEdit"
-            android:theme="@style/AppTheme.Base"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTask"/>
 
         <activity
             android:name=".activity.GoodsShow"
+            android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask"/>
     </application>
 

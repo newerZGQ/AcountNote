@@ -22,5 +22,17 @@ public class DateTools {
         }
         return format.format(new Date());
     }
+    public static String getYear(){
+        format = new SimpleDateFormat("yyyy");
+        return format.format(new Date());
+    }
+    public static String getMonth(){
+        format = new SimpleDateFormat("MM");
+        return format.format(new Date());
+    }
+    public static String getDay(){
+        format = new SimpleDateFormat("dd");
+        return format.format(new Date());
+    }
 
 }

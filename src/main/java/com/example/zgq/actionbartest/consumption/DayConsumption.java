@@ -17,6 +17,7 @@ public class DayConsumption extends Consumption implements Serializable {
         this.dayDate = dayDate;
         this.singleConsumptions = singleConsumptions;
     }
+
     public double getDayTotal(){
         return dayTotal;
     }

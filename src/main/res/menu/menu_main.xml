@@ -3,24 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
     <item
-        android:id="@+id/clothing_item"
-        android:title="@string/clothing_item"
+        android:id="@+id/date_item"
+        android:title="@string/date"
         android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/food_item"
-        android:title="@string/food_item"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/living_item"
-        android:title="@string/living_item"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/traffic_item"
-        android:title="@string/traffic_item"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 
 </menu>
