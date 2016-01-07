@@ -116,7 +116,10 @@ public class DataOperate extends Observable{
                 dayConsumptions.add((DayConsumption)c);
             }
         }
-        happiness /= singleConsumptions.size();
+        if (happiness==0){
+        }else {
+            happiness /= singleConsumptions.size();
+        }
         return new MonthConsumption(singleConsumptions,dayConsumptions,consumptions,monthConsum,0,happiness);
     }
 

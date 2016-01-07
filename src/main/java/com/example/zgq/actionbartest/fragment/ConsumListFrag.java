@@ -50,7 +50,8 @@ public class ConsumListFrag extends Fragment {
     private View footerLayout;
     private View headerLayout;
     private TextView monthConsum;
-    private TextView dateHeader;
+    private TextView dateMonth;
+    private TextView dateYear;
     private int rememPosition;
     private int year;
     private int month;
@@ -89,7 +90,9 @@ public class ConsumListFrag extends Fragment {
         consumptions = monthConsumption.getConsumptions();
         swipeAdapter.arrayList = consumptions;
         monthConsum.setText("" + monthConsumption.getMonthTotalOut());
-        dateHeader.setText("" + year + month);
+        Log.d("-----",""+monthConsumption.getMonthTotalOut());
+        dateMonth.setText("" + month);
+        dateYear.setText("" + year);
         mListView.setAdapter(swipeAdapter);
         if (monthConsumption.getConsumptions().size() == 0){
             footerLayout.setVisibility(View.INVISIBLE);
@@ -119,8 +122,9 @@ public class ConsumListFrag extends Fragment {
         mRefreshLayout = (RefreshLayout) view.findViewById(R.id.swipe_container);
         mListView = (SwipeListView) view.findViewById(R.id.list);
         footerLayout = LayoutInflater.from(mContext).inflate(R.layout.refreshfooterlayout, null);
-        headerLayout = LayoutInflater.from(mContext).inflate(R.layout.listview_header,null);
-        dateHeader = (TextView) headerLayout.findViewById(R.id.date_header);
+        headerLayout = LayoutInflater.from(mContext).inflate(R.layout.listview_header,mListView,false);
+        dateMonth = (TextView) headerLayout.findViewById(R.id.date_month);
+        dateYear = (TextView) headerLayout.findViewById(R.id.date_year);
 
         monthConsum = (TextView) headerLayout.findViewById(R.id.monthConsum);
         monthConsum.setText(""+DataOperate.selectedMonth.getMonthTotalOut());
@@ -190,8 +194,6 @@ public class ConsumListFrag extends Fragment {
         mRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-//                footerLayout.findViewById(R.id.text_next).setVisibility(View.INVISIBLE);
-//                footerLayout.findViewById(R.id.load_progress_bar).setVisibility(View.VISIBLE);
                 String sMonth;
                 month +=1;
                 if (month == 13){

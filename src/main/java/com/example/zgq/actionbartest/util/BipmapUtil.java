@@ -65,15 +65,4 @@ public class BipmapUtil {
 
         return result;
     }
-//    private Bitmap getBitmapFromUri(Uri uri)
-//    {
-//        try {
-//            // 读取uri所在的图片
-//            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-//            return bitmap;
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 }

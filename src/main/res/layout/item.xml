@@ -1,61 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="110dp"
     android:orientation="horizontal" >
 
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/item_left"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/item_left_date"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:gravity="center_vertical|right"
-            android:textSize="11sp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/linelist"
-            android:scaleType="centerInside"
-            android:id="@+id/listview_line"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/item_left_date" />
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/item_left_date"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:textSize="11sp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/item_left_price"
-            android:layout_width="80dp"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-        <TextView
-            android:id="@+id/item_left_lable"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/item_left_price" />
-
-    </RelativeLayout>
-
+            android:layout_weight="1">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/corner_layout_grey"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp">
+            <TextView
+                android:id="@+id/item_left_price"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/item_left_lable"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/item_right"
         android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:background="#000000" >
-        <TextView
-            android:id="@+id/item_right_txt"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/item_right_button"
+            android:background="@drawable/ic_action_action_delete"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:gravity="center"
-            android:textColor="#FFFFFF" />
+            android:gravity="center" />
     </RelativeLayout>
 
 

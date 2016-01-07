@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
@@ -84,7 +85,7 @@ public class SwipeAdapter extends BaseAdapter {
         Consumption consumption = arrayList.get(thisPosition);
         if (!consumption.isSingleCon()) {
             DayConsumption dayConsumption = (DayConsumption) consumption;
-            if (convertView == null || convertView.getHeight() == 160) {
+            if (convertView == null || convertView.getHeight() == 220) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_fragment_day,parent,false);
                 itemDay = new ViewDayHolder();
                 itemDay.dayTotal = (TextView) convertView.findViewById(R.id.day_total);
@@ -101,7 +102,7 @@ public class SwipeAdapter extends BaseAdapter {
 
         }else{
             final SingleConsumption single = (SingleConsumption) consumption;
-            if (convertView == null || convertView.getHeight() == 180 ) {
+            if (convertView == null || convertView.getHeight() == 240 ) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.item, parent, false);
                 itemSingle = new ViewSingleHolder();
                 itemSingle.item_left = (View) convertView.findViewById(R.id.item_left);
@@ -109,7 +110,7 @@ public class SwipeAdapter extends BaseAdapter {
                 itemSingle.item_left_price = (TextView) convertView.findViewById(R.id.item_left_price);
                 itemSingle.item_left_label = (TextView) convertView.findViewById(R.id.item_left_lable);
                 itemSingle.item_left_date = (TextView) convertView.findViewById(R.id.item_left_date);
-                itemSingle.item_right_txt = (TextView) convertView.findViewById(R.id.item_right_txt);
+                itemSingle.item_right_button = (Button) convertView.findViewById(R.id.item_right_button);
                 convertView.setTag(itemSingle);
             } else {// 有直接获得ViewHolder
                 itemSingle = (ViewSingleHolder) convertView.getTag();
@@ -122,7 +123,7 @@ public class SwipeAdapter extends BaseAdapter {
             itemSingle.item_left_price.setText("" + single.getPrice());
             itemSingle.item_left_label.setText(single.getLable());
             itemSingle.item_left_date.setText(single.getDate().substring(8, 13));
-            itemSingle.item_right_txt.setText("delete");
+//            itemSingle.item_right_txt.setText("delete");
             itemSingle.item_right.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -159,7 +160,7 @@ public class SwipeAdapter extends BaseAdapter {
 
         TextView item_left_label;
 
-        TextView item_right_txt;
+        Button item_right_button;
     }
     private class ViewDayHolder {
         TextView dayTotal;

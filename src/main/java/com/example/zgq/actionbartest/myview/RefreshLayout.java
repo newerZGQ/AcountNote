@@ -26,7 +26,7 @@ public class RefreshLayout extends SwipeRefreshLayout {
     public RefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
 //        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        mTouchSlop = 10;
+        mTouchSlop = 120;
     }
 
     //set the child view of RefreshLayout,ListView
